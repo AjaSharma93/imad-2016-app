@@ -1,13 +1,21 @@
-body {
-    font-family: sans-serif;
-    background-color: lightgrey;
-    margin-top: 75px;
+html, body {
+    font-family: 'Open Sans',sans-serif;
+	display:table;
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
 }
 
-.center {
-    text-align: center;
+.centeredtext {
+    text-align:center;
+	display:table-cell;
+	vertical-align:middle;
 }
 
+.neontext {
+	text-shadow: 1px 1px 2px red, 0 0 25px orange, 0 0 5px red;
+}
 .text-big {
     font-size: 300%;
 }
@@ -16,7 +24,83 @@ body {
     font-weight: bold;
 }
 
+.whitetext{
+	color: white;
+}
+
 .img-medium {
     height: 200px;
 }
+
+
+a:link{
+	text-decoration: none;
+	color:white;
+}
+
+a:visited{
+	color:grey;
+}
+
+.navigation {
+	position: fixed;
+	top:0;
+	left:0;
+	width:100%;
+	z-index:100;
+	background: #272822;
+	padding: 10px;
+	line-height:2em;
+	border-bottom: 2px solid #26d9e8;
+}
+
+.navigation a{
+	color:inherit;
+}
+
+div{
+	display: block;
+}
+
+.navigation li{
+	display:block;
+	vertical-align:top;
+	margin-right:20px;
+	float:left;
+	border: 1px solid #dee22e;
+	color: #dee22e;
+	border-radius: 4px;
+	padding-left:5px;
+	padding-right:5px;
+	list-style-type: none;
+	line-height:4px;
+	transition: border-color 0.2s linear;
+}
+
+.navigation li:nth-child(2){
+	border-color: #f55c31;
+	color:#f55c31;
+}
+
+.navigation li:nth-child(3){
+	border-color: #f92672;
+	color:#f92672;
+}
+
+.navigation li:nth-child(4){
+	border-color: #ae81ff;
+	color:#ae81ff;
+}
+
+.navigation li:not(:hover){
+	border-color: #272822;
+}
+
+#Share{
+	float:right;
+	left:100%;
+	top:0;
+	border: 0;
+}
+
 

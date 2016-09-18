@@ -2,17 +2,32 @@
 <html>
     <head>
         <link href="/ui/style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+		<style type="text/css">
+		.bgimg{
+			background-image: url(/ui/Eyes.jpg);
+		}
+		</style>
     </head>
-    <body>
-        <div class="center">
-            <img src="/ui/madi.png" class="img-medium"/>
-        </div>
+    <body class="bgimg">
         <br>
-        <div class="center text-big bold">
-            Hi! I am Aja Sharma. This is my webapp.
-	<h4> This is a heading <h4>
-	    I've made some local changes
-        </div>
+			<div class="navigation">
+			<ul>
+			<li><a href="/"><p class="bold animated bounceInLeft">Home</p></a></li>
+			<li><a href=""><p class="bold animated bounceInLeft">Contact</p></a></li>
+			<li><a href=""><p class="bold animated bounceInLeft">About me</p></a></li>
+			<li><a href=""><p class="bold animated bounceInLeft">Help</p></a></li>
+			<li id="Share" class="animated bounceInRight"><a href="https://twitter.com/ajasharma1101" target="_blank" style="text-decoration:none;">
+			<img src="https://g.twimg.com/dev/documentation/image/Twitter_logo_blue_32.png" alt="Twitter" style="border:0;width:32px;height:32px"></a></li>
+			<li id="Share" class="animated bounceInRight"><a href="//plus.google.com/u/0/106415896484965862024?prsrc=3"rel="publisher" target="_blank" style="text-decoration:none;">
+			<img src="//ssl.gstatic.com/images/icons/gplus-32.png" alt="Google+" style="border:0;width:32px;height:32px;"/>
+            </a></li>
+			<li id="Share" class="bold"><p class="animated bounceInRight">Follow me on</p><li>
+			</ul>
+			</div>
+		<div class="centeredtext text-big whitetext neontext">
+		<p class="midsection">Hi. Welcome to my webapp.</p>
+		</div>
         <script type="text/javascript" src="/ui/main.js">
         </script>
     </body>
