@@ -7,6 +7,10 @@ html, body {
 	padding:0;
 }
 
+.bgimg{
+			background-image: url(/ui/Eyes.jpg);
+		}
+
 .centeredtext {
     text-align:center;
 	display:table-cell;
@@ -35,12 +39,8 @@ html, body {
 
 a:link{
 	text-decoration: none;
-	color:white;
 }
 
-a:visited{
-	color:grey;
-}
 
 .navigation {
 	position: fixed;
@@ -94,6 +94,26 @@ div{
 
 .navigation li:not(:hover){
 	border-color: #272822;
+}
+
+.navigation li.selected1{
+	background: #dee22e;
+	color: #272822;
+}
+
+.navigation li.selected2{
+	background: #f55c31;
+	color: #272822;
+}
+
+.navigation li.selected3{
+	background: #f92672;
+	color: #272822;
+}
+
+.navigation li.selected4{
+	background: #ae81ff;
+	color: #272822;
 }
 
 #Share{
