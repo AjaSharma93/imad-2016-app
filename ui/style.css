@@ -20,6 +20,10 @@ html, body {
     font-size: 300%;
 }
 
+.bgimg{
+			background-image: url(/ui/Eyes.jpg);
+}
+
 .bold {
     font-weight: bold;
 }
