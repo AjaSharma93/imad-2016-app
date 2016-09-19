@@ -7,14 +7,29 @@ app.use(morgan('combined'));
 
 var about={
 	selected2: 'class="selected2"',
-	content:``
+	content:`
+	<div class="inline">
+		<img class="resizeProfileImg" src="/ui/me.jpg" alt="My Profile">
+		<div id="wrapper">
+			<p>Name: Aja Sharma</p>
+			<p>From Bangalore, Karnataka</p>
+			<p>Graduated in B.E(E.C.E) in 2016<p>
+			<p>Android and Java developer</p>
+			<p>Interests: Coding, Football, Music, Gaming</p>
+			<p>Thrilled to work with IMAD</p>
+		</div>
+	</div>`
 };
 
 var contact={
 	selected3: 'class="selected3"',
 	content:`
-	<p>Email: aja.sharma1101@gmail.com</p>
-	<p>GitHub: www.github.com/AjaSharma93</p>`
+	<div class="centeredtext text-big whitetext neontext">
+		<p>
+			<p>Email: aja.sharma1101@gmail.com</p>
+			<p>GitHub: www.github.com/AjaSharma93</p>
+		</p>
+	</div>`
 };
 
 var help={
@@ -55,9 +70,7 @@ function createTemplate(data){
 					<li id="Share" class="bold"><p class="animated bounceInRight">Follow me on</p><li>
 				</ul>
 			</div>
-			<div class="centeredtext text-big whitetext neontext">
-				<p class="midsection"> ${content} </p>
-			</div>
+			${content}
 			<script type="text/javascript" src="/ui/main.js">
 			</script>
 		</body>
@@ -91,6 +104,10 @@ app.get('/about', function(req, res){
 
 app.get('/help', function(req, res){
 	res.send(createTemplate(help));
+});
+
+app.get('/ui/me.jpg', function(req, res){
+	res.sendFile(path.join(__dirname,'ui','me.jpg'));
 });
 
 
