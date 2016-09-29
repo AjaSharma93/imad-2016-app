@@ -8,9 +8,11 @@ html, body {
 }
 
 .bgimg{
-			background-image: url(/ui/Eyes.jpg);
+		background-image: url(/ui/images/prism);
 		}
-
+.menu{
+	position: fixed;
+}
 .centeredtext {
     text-align:center;
 	display:table-cell;
@@ -148,5 +150,36 @@ div{
 	border-radius:5px;
 }
 
+
+.articles{
+	display:block;
+	margin-top:200px;
+}
+
+.articles ol{
+	float:left;
+	width:10%;
+}
+
+.articles li{
+	display:block;
+	padding-bottom:20px;
+}
+
+.articles a:link{
+	font:bold;
+	color:white;
+}
+
+.articles a:visited{
+	color: grey;
+}
+
+
+.displaynews{
+	height: 400px;
+	width:80%;
+	background-color: white;
+}
 
 

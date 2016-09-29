@@ -9,7 +9,7 @@ var about={
 	selected2: 'class="selected2"',
 	content:`
 	<div class="inline">
-		<img class="resizeProfileImg" src="/ui/me.jpg" alt="My Profile">
+		<img class="resizeProfileImg" src="/ui/images/me.jpg" alt="My Profile">
 		<div id="wrapper">
 			<p>Name: Aja Sharma</p>
 			<p>From Bangalore, Karnataka</p>
@@ -32,11 +32,8 @@ var contact={
 	</div>`
 };
 
-var help={
-	selected4: 'class="selected4"',
-	content:``
-};
 
+//template for creating the webpages of home, about, contact and articles
 function createTemplate(data){
 	var selected1=data.selected1;
 	var selected2=data.selected2;
@@ -52,12 +49,12 @@ function createTemplate(data){
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 		</head>
 		<body class="bgimg">
-			<div class="navigation">
+			<div class="navigation menu">
 				<ul>
 					<li ${selected1}><a href="/" ><p class="bold animated bounceInLeft">Home</p></a></li>
 					<li ${selected2}><a href="/about"  ><p class="bold animated bounceInLeft">About Me</p></a></li>
 					<li ${selected3}><a href="/contact" ><p class="bold animated bounceInLeft">Contact</p></a></li>
-					<li ${selected4}><a href="/help"><p class="bold animated bounceInLeft">Help</p></a></li>
+					<li ${selected4}><a href="/articles"><p class="bold animated bounceInLeft">Articles</p></a></li>
 					<li id="Share" class="animated bounceInRight">
 						<a href="https://twitter.com/ajasharma1101" target="_blank" style="text-decoration:none;">
 						<img src="https://g.twimg.com/dev/documentation/image/Twitter_logo_blue_32.png" alt="Twitter" style="border:0;width:32px;height:32px"></a>
@@ -78,6 +75,13 @@ function createTemplate(data){
 	return htmlTemplate;
 }
 
+counter=0;
+
+app.get('/counter', function(req, res){
+	counter=counter+1;
+	res.send(counter.toString());
+});
+
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
@@ -86,8 +90,8 @@ app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
 });
 
-app.get('/ui/Eyes.jpg', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'Eyes.jpg'));
+app.get('/ui/images/prism', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', 'images','prism.jpg'));
 });
 
 app.get('/ui/animate.css', function (req, res) {
@@ -102,14 +106,110 @@ app.get('/about', function(req, res){
 	res.send(createTemplate(about));
 });
 
-app.get('/help', function(req, res){
-	res.send(createTemplate(help));
+app.get('/ui/images/me.jpg', function(req, res){
+	res.sendFile(path.join(__dirname,'ui','images','me.jpg'));
 });
 
-app.get('/ui/me.jpg', function(req, res){
-	res.sendFile(path.join(__dirname,'ui','me.jpg'));
+app.get('/ui/main.js', function(req, res){
+	res.sendFile(path.join(__dirname, 'ui','main.js'))
 });
 
+app.get('/articles', function(req, res){
+	res.sendFile(path.join(__dirname,'ui','articles.html'));
+});
+
+//Code below is used to add comments to the articles page
+
+var art1comments=[];
+var art2comments=[];
+var art3comments=[];
+var art4comments=[];
+
+//adds the comments to the respective article on recieving request
+
+app.get('/commentry', function(req, res)
+{
+	var details=req.query.details;
+	var links=JSON.parse(details);
+	var link=links[2];
+	if(link=="/articleOne") art1comments.push(details);
+	else if(link=="/articleTwo") art2comments.push(details);
+	else if(link=="/articleThree") art3comments.push(details);
+	else if(link=="/articleFour") art4comments.push(details);
+	res.send("Success");
+});
+
+//Object with article details
+
+var articleArray={
+	articleOne: {
+	content: `
+	<h1 style="text-align: center">Article 1</h1>
+	<p> This is article 1</p>`,
+	comment: art1comments },
+	
+	articleTwo:{ 
+	content:`
+	<h1 style="text-align: center">Article 2</h1>
+	<p> This is article 2</p>`, 
+	comment: art2comments},
+	
+	articleThree:{ 
+	content: `
+	<h1 style="text-align: center">Article 3</h1>
+	<p> This is article 3</p>`,
+	comment: art3comments},
+	
+	articleFour:{
+	content: `
+	<h1 style="text-align: center">Article 4</h1>
+	<p> This is article 4</p>`,
+	comment: art4comments}
+}
+
+//template for creating articles
+function articleTemplate(data)
+{
+	var content=data.content;
+	var comment=data.comment;
+	var detailsArray=[];
+	var commentList='';
+	var detailsList='';
+	if(comment!= '')
+	{
+		for(var j=0;j<comment.length;j++)
+		{
+			detailsList=JSON.parse(comment[j]); //parse the comments JSON object
+			for(var i=0; i<detailsList.length;i++)
+				detailsArray.push(detailsList[i]);
+		}
+		for (var i=0; i<detailsArray.length; i=i+3)
+		{
+			commentList+='<h3>'+detailsArray[i]+'</h3><p>'+detailsArray[i+1]+'</p><hr/>';
+		}
+	}
+	var template=`
+	<!doctype html>
+		<html>
+			<head>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			</head>
+			<body>
+				<div class="container">
+					${content}
+					<h2>Comments:</h2><hr/>
+					${commentList}
+				</div>
+			</body>
+		</html>`;
+		
+	return template;
+}
+
+app.get('/:articleName', function(req, res){
+	var articleName=req.params.articleName
+	res.send(articleTemplate(articleArray[articleName]));
+});
 
 
 var port = 8080; // Use 8080 for local development because you might already have apache running on 80

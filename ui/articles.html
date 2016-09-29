@@ -11,10 +11,10 @@
 		<div class="navigation menu">
 			<ul>
 
-				<li class="selected1"><a href="/"><p class="bold animated bounceInLeft">Home</p></a></li>
+				<li><a href="/"><p class="bold animated bounceInLeft">Home</p></a></li>
 				<li><a href="/about"><p class="bold animated bounceInLeft">About Me</p></a></li>
 				<li><a href="/contact"><p class="bold animated bounceInLeft">Contact</p></a></li>
-				<li><a href="/articles"><p class="bold animated bounceInLeft">Articles</p></a></li>
+				<li class="selected4"><a href="/articles"><p class="bold animated bounceInLeft">Articles</p></a></li>
 				<li id="Share" class="animated bounceInRight">
 					<a href="https://twitter.com/ajasharma1101" target="_blank" style="text-decoration:none;">
 					<img src="https://g.twimg.com/dev/documentation/image/Twitter_logo_blue_32.png" alt="Twitter" style="border:0;width:32px;height:32px"></a>
@@ -27,8 +27,22 @@
 				<li id="Share" class="bold"><p class="animated bounceInRight">Follow me on</p><li>
 			</ul>
 		</div>
-		<div class="centeredtext text-big whitetext neontext">
-			<p>Hi. Welcome to my webapp.</p>
+		<div class="articles">
+			<ol>
+				<li><a href="/articleOne" target="news">Article 1</a></li>
+				<li><a href="/articleTwo" target="news">Article 2</a></li>
+				<li><a href="/articleThree" target="news">Article 3</a></li>
+				<li><a href="/articleFour" target="news">Article 4</a></li>
+			</ol>
+			<div><iframe src="/articleOne" id="articleWindow" class="displaynews" name="news"></iframe></div>
+		</div>
+		<div class="comments">
+			<h1 class="whitetext">Add a comment:</h1>
+			<input type="text" id="fname" placeholder="your name"/><br>
+			<input type="text" id="comment" placeholder="your comment"/><br>
+			<input type="submit" id="submit_btn"value="Submit"/> 
+		</div>
+		<div id="acknowledge" class="whitetext">
 		</div>
         <script type="text/javascript" src="/ui/main.js">
         </script>
