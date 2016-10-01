@@ -1,5 +1,5 @@
 html, body {
-    font-family: 'Open Sans',sans-serif;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 	display:table;
 	height:100%;
 	width:100%;
@@ -10,7 +10,7 @@ html, body {
 .bgimg{
 		background-image: url(/ui/images/prism);
 		}
-.menu{
+div.menu{
 	position: fixed;
 }
 .centeredtext {
@@ -53,77 +53,71 @@ a:link{
 }
 
 
-
-.navigation {
-	position: fixed;
+div.navigation {
 	top:0;
 	left:0;
 	width:100%;
 	z-index:100;
 	background: #272822;
 	padding: 10px;
-	line-height:2em;
+	height:5em;
 	border-bottom: 2px solid #26d9e8;
 }
 
-.navigation a{
+ div.navigation a{
 	color:inherit;
 }
 
-div{
-	display: block;
-}
-
-.navigation li{
-	display:block;
-	vertical-align:top;
+div.navigation li{
+	margin-top:10px;
 	margin-right:20px;
 	float:left;
 	border: 1px solid #dee22e;
 	color: #dee22e;
 	border-radius: 4px;
+	padding-top:5px;
 	padding-left:5px;
 	padding-right:5px;
 	list-style-type: none;
-	line-height:4px;
+	line-height:1em;
 	transition: border-color 0.2s linear;
 }
 
-.navigation li:nth-child(2){
+div.navigation li:nth-child(2){
 	border-color: #f55c31;
 	color:#f55c31;
 }
 
-.navigation li:nth-child(3){
+div.navigation li:nth-child(3){
 	border-color: #f92672;
 	color:#f92672;
 }
 
-.navigation li:nth-child(4){
+div.navigation li:nth-child(4){
 	border-color: #ae81ff;
 	color:#ae81ff;
 }
 
-.navigation li:not(:hover){
+div.navigation li:not(:hover){
 	border-color: #272822;
 }
 
-.navigation li.selected1{
+div.navigation li.selected1{
 	background: #dee22e;
 	color: #272822;
 }
 
-.navigation li.selected2{
+div.navigation li.selected2{
 	background: #f55c31;
 	color: #272822;
 }
 
-.navigation li.selected3{
+div.navigation li.selected3{
 	background: #f92672;
 	color: #272822;
 }
 
-.navigation li.selected4{
+div.navigation li.selected4{
 	background: #ae81ff;
 	color: #272822;
 }
@@ -153,7 +147,7 @@ div{
 
 .articles{
 	display:block;
-	margin-top:200px;
+	margin-top:100px;
 }
 
 .articles ol{
@@ -172,7 +166,7 @@ div{
 }
 
 .articles a:visited{
-	color: grey;
+	color:white;
 }
 
 
@@ -180,6 +174,20 @@ div{
 	height: 400px;
 	width:80%;
 	background-color: white;
+	border: none;
+	border-radius:5px;
 }
 
+.comments
+{
+	width:50%;
+	padding:5px;
+}
+
+
+
+#acknowledge
+{
+	float:right;
+}
 

@@ -5,6 +5,7 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
+//details of the about tab
 var about={
 	selected2: 'class="selected2"',
 	content:`
@@ -21,6 +22,7 @@ var about={
 	</div>`
 };
 
+//details of the contact tab
 var contact={
 	selected3: 'class="selected3"',
 	content:`
@@ -33,7 +35,7 @@ var contact={
 };
 
 
-//template for creating the webpages of home, about, contact and articles
+//template for creating the webpages of home, about, contact tabs
 function createTemplate(data){
 	var selected1=data.selected1;
 	var selected2=data.selected2;
@@ -44,6 +46,7 @@ function createTemplate(data){
 	<!doctype html>
 	<html>
 		<head>
+			<link href="/ui/css/bootstrap.css" rel="stylesheet" />
 			<link href="/ui/style.css" rel="stylesheet" />
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,11 +79,6 @@ function createTemplate(data){
 }
 
 counter=0;
-
-app.get('/counter', function(req, res){
-	counter=counter+1;
-	res.send(counter.toString());
-});
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
@@ -132,11 +130,12 @@ app.get('/commentry', function(req, res)
 	var details=req.query.details;
 	var links=JSON.parse(details);
 	var link=links[2];
-	if(link=="/articleOne") art1comments.push(details);
-	else if(link=="/articleTwo") art2comments.push(details);
-	else if(link=="/articleThree") art3comments.push(details);
-	else if(link=="/articleFour") art4comments.push(details);
-	res.send("Success");
+	if(link=="/articles/articleOne") art1comments.push(details);
+	else if(link=="/articles/articleTwo") art2comments.push(details);
+	else if(link=="/articles/articleThree") art3comments.push(details);
+	else if(link=="/articles/articleFour") art4comments.push(details);
+	else res.send('Invalid input');
+	res.send('Comment added successfully!');
 });
 
 //Object with article details
@@ -183,9 +182,9 @@ function articleTemplate(data)
 			for(var i=0; i<detailsList.length;i++)
 				detailsArray.push(detailsList[i]);
 		}
-		for (var i=0; i<detailsArray.length; i=i+3)
+		for (var i=0; i<detailsArray.length; i=i+4)
 		{
-			commentList+='<h3>'+detailsArray[i]+'</h3><p>'+detailsArray[i+1]+'</p><hr/>';
+			commentList+='<span>'+detailsArray[i]+'</span>('+detailsArray[i+3]+')<p>'+detailsArray[i+1]+'</p><hr/>';
 		}
 	}
 	var template=`
@@ -194,6 +193,11 @@ function articleTemplate(data)
 			<head>
 				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			</head>
+			<style type="text/css">
+			body{
+				font-family: "Comic Sans MS", cursive, sans-serif;
+			}
+			</style>
 			<body>
 				<div class="container">
 					${content}
@@ -206,8 +210,16 @@ function articleTemplate(data)
 	return template;
 }
 
-app.get('/:articleName', function(req, res){
-	var articleName=req.params.articleName
+//including bootstrap css file here
+
+app.get('/ui/css/:cssfile', function(req, res)
+{
+	var cssfile=req.params.cssfile;
+	res.sendFile(path.join(__dirname,'ui','css', cssfile));
+});
+
+app.get('/articles/:articleName', function(req, res){
+	var articleName=req.params.articleName;
 	res.send(articleTemplate(articleArray[articleName]));
 });
 

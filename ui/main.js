@@ -4,6 +4,12 @@ var submit=document.getElementById('submit_btn');
 var details=[];
 submit.onclick=function(){
 	var request=new XMLHttpRequest();
+	var fname=document.getElementById('fname');
+	var name=fname.value;
+	var commentInput=document.getElementById('comment');
+	var comment=commentInput.value;
+	var emailInput=document.getElementById('emailID');
+	var email=emailInput.value;
 	request.onreadystatechange=function(){
 		if(request.readyState==XMLHttpRequest.DONE){
 			if(request.status==200)
@@ -12,17 +18,17 @@ submit.onclick=function(){
 				var acknowledge=document.getElementById('acknowledge');
 				acknowledge.innerHTML=success.toString();
 				details=[];
+				fname.value='';
+				commentInput.value='';
+				emailInput.value='';
 			}
 		}
 	}
-	var fname=document.getElementById('fname');
-	var name=fname.value;
-	var commentInput=document.getElementById('comment');
-	var comment=commentInput.value;
-	var url=document.getElementById('articleWindow').contentWindow.location.pathname || document.getElementById('articleWindow').contentDocument.location.pathname;
+	var articlepath=document.getElementById('articleWindow').contentWindow.location.pathname || document.getElementById('articleWindow').contentDocument.location.pathname;
 	details.push(name);
 	details.push(comment);
-	details.push(url);
+	details.push(articlepath);
+	details.push(email);
 	request.open('GET','/commentry?details='+JSON.stringify(details), true);
 	request.send(null);
 };
