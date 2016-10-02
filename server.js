@@ -116,26 +116,36 @@ app.get('/articles', function(req, res){
 	res.sendFile(path.join(__dirname,'ui','articles.html'));
 });
 
-//Code below is used to add comments to the articles page
+//Code below is used to add comments to respective lists of the articles page
 
 var art1comments=[];
 var art2comments=[];
 var art3comments=[];
 var art4comments=[];
 
-//adds the comments to the respective article on recieving request
+//adds the comments to the respective article with date and time on recieving request
 
 app.get('/commentry', function(req, res)
 {
 	var details=req.query.details;
 	var links=JSON.parse(details);
 	var link=links[2];
-	if(link=="/articles/articleOne") art1comments.push(details);
-	else if(link=="/articles/articleTwo") art2comments.push(details);
+	var currentDate=new Date();//parse the current date and time of the server
+	
+	//get the date and time in the following format: DD:MM:YYYY HH:MM:SS TimeZone 
+	var serverTime= currentDate.getDate()+"/"+(currentDate.getMonth()+1)+"/"+currentDate.getFullYear()+" " 
+					+currentDate.getHours()+":"+currentDate.getMinutes()+":"+currentDate.getSeconds()+" "
+					+currentDate.toString().split('(')[1].slice(0, -1)  //gets the time zone
+					
+	links.push(serverTime);
+	details=JSON.stringify(links); //added server time to JSON object
+	if(link=="/articles/articleOne") art1comments.push(details);             //adding the comments to the 
+	else if(link=="/articles/articleTwo") art2comments.push(details);        //respective articles
 	else if(link=="/articles/articleThree") art3comments.push(details);
 	else if(link=="/articles/articleFour") art4comments.push(details);
 	else res.send('Invalid input');
-	res.send('Comment added successfully!');
+	
+	res.send("Comment submitted successfully");
 });
 
 //Object with article details
@@ -144,7 +154,8 @@ var articleArray={
 	articleOne: {
 	content: `
 	<h1 style="text-align: center">Article 1</h1>
-	<p> This is article 1</p>`,
+	<p> This is the content of article 1.This is the content of article 1.This is the content of article 1.This is the content of article 1.
+	This is the content of article 1.This is the content of article 1.This is the content of article 1. </p>`,
 	comment: art1comments },
 	
 	articleTwo:{ 
@@ -180,17 +191,25 @@ function articleTemplate(data)
 		{
 			detailsList=JSON.parse(comment[j]); //parse the comments JSON object
 			for(var i=0; i<detailsList.length;i++)
-				detailsArray.push(detailsList[i]);
+				detailsArray.push(detailsList[i]); //comments list is parsed to an array of details
 		}
-		for (var i=0; i<detailsArray.length; i=i+4)
+		for (var i=0; i<detailsArray.length; i=i+5)
 		{
-			commentList+='<span>'+detailsArray[i]+'</span>('+detailsArray[i+3]+')<p>'+detailsArray[i+1]+'</p><hr/>';
+			commentList+='<span class="bold">'+detailsArray[i]+'</span> posted on '+detailsArray[i+4] +'<p>'+detailsArray[i+1]+'</p><hr/>'; //html statement formed from detailsArray
 		}
+		
+		/* 	detailsArray[i]->Name 
+			detailsArray[i+1]->Comment
+			detailsArray[i+2]->Article Path
+			detailsArray[i+3]->Email ID
+			detailsArray[i+4]->Time when comment was posted
+		*/
 	}
 	var template=`
 	<!doctype html>
 		<html>
 			<head>
+				<link href="/ui/css/articles.css" rel="stylesheet" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			</head>
 			<style type="text/css">
@@ -201,7 +220,7 @@ function articleTemplate(data)
 			<body>
 				<div class="container">
 					${content}
-					<h2>Comments:</h2><hr/>
+					<h3>Comments:</h3><hr/>
 					${commentList}
 				</div>
 			</body>
