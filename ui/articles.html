@@ -2,6 +2,20 @@
 <html>
     <head>
         <title>My WebApp</title>
+		<!-- styles needed by jScrollPane -->
+		<link type="text/css" href="style/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+
+		<!-- latest jQuery direct from google's CDN -->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+		</script>
+
+		<!-- the mousewheel plugin - optional to provide mousewheel support -->
+		<script type="text/javascript" src="script/jquery.mousewheel.js"></script>
+
+		<!-- the jScrollPane script -->
+		<script type="text/javascript" src="script/jquery.jscrollpane.min.js"></script>
+		
+		<!-- BootStrap styles file -->
 		<link href="/ui/css/bootstrap.css" rel="stylesheet"/>
         <link href="/ui/style.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -9,7 +23,7 @@
 
     </head>
     <body class="bgimg">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="navigation menu" role="navigation">
 				<ul>
 
@@ -30,12 +44,26 @@
 				</ul>
 			</div>
 			<div class="articles">
-				<ol>
-					<li><a href="/articles/articleOne" target="news">Article 1</a></li>
-					<li><a href="/articles/articleTwo" target="news">Article 2</a></li>
-					<li><a href="/articles/articleThree" target="news">Article 3</a></li>
-					<li><a href="/articles/articleFour" target="news">Article 4</a></li>
-				</ol>
+				<div class="scroll-pane">
+					<ol>
+						<li><a href="/articles/articleOne" target="news">Article 1</a></li>
+						<li><a href="/articles/articleTwo" target="news">Article 2</a></li>
+						<li><a href="/articles/articleThree" target="news">Article 3</a></li>
+						<li><a href="/articles/articleFour" target="news">Article 4</a></li>
+						<li><a href="/articles/articleOne" target="news">Article 1</a></li>
+						<li><a href="/articles/articleTwo" target="news">Article 2</a></li>
+						<li><a href="/articles/articleThree" target="news">Article 3</a></li>
+						<li><a href="/articles/articleFour" target="news">Article 4</a></li>
+						<li><a href="/articles/articleOne" target="news">Article 1</a></li>
+						<li><a href="/articles/articleTwo" target="news">Article 2</a></li>
+						<li><a href="/articles/articleThree" target="news">Article 3</a></li>
+						<li><a href="/articles/articleFour" target="news">Article 4</a></li>
+						<li><a href="/articles/articleOne" target="news">Article 1</a></li>
+						<li><a href="/articles/articleTwo" target="news">Article 2</a></li>
+						<li><a href="/articles/articleThree" target="news">Article 3</a></li>
+						<li><a href="/articles/articleFour" target="news">Article 4</a></li>
+					</ol>
+				</div>
 				<div><iframe src="/articles/articleOne" id="articleWindow" class="displaynews" name="news"></iframe></div>
 			</div>
 			<div class="comments">

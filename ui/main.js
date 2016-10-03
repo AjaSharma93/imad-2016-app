@@ -34,3 +34,7 @@ submit.onclick=function(){
 };
 
 
+$(document).ready(function(){
+	$('.scroll-pane').jScrollPane();
+});
+

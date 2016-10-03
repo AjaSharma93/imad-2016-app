@@ -195,7 +195,7 @@ function articleTemplate(data)
 		}
 		for (var i=0; i<detailsArray.length; i=i+5)
 		{
-			commentList+='<span class="bold">'+detailsArray[i]+'</span> posted on '+detailsArray[i+4] +'<p>'+detailsArray[i+1]+'</p><hr/>'; //html statement formed from detailsArray
+			commentList+='<span class="bold">'+detailsArray[i]+'</span> posted on <span class=italics>'+detailsArray[i+4] +'</span><p>'+detailsArray[i+1]+'</p><hr/>'; //html statement formed from detailsArray
 		}
 		
 		/* 	detailsArray[i]->Name 
@@ -205,6 +205,8 @@ function articleTemplate(data)
 			detailsArray[i+4]->Time when comment was posted
 		*/
 	}
+	
+	//template for the creation of the article page
 	var template=`
 	<!doctype html>
 		<html>
@@ -214,7 +216,7 @@ function articleTemplate(data)
 			</head>
 			<style type="text/css">
 			body{
-				font-family: "Comic Sans MS", cursive, sans-serif;
+				font-family: Georgia, serif;
 			}
 			</style>
 			<body>
