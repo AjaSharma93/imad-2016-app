@@ -46,9 +46,14 @@ function createTemplate(data){
 	<!doctype html>
 	<html>
 		<head>
-			<link href="/ui/css/bootstrap.css" rel="stylesheet" />
-			<link href="/ui/style.css" rel="stylesheet" />
+			<!-- Bootstrap compiled and minified CSS -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+			integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+			<link href="/ui/css/style.css" rel="stylesheet" />
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+			<!-- latest jQuery direct from google's CDN -->
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+			</script>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 		</head>
 		<body class="bgimg">
@@ -80,41 +85,34 @@ function createTemplate(data){
 
 counter=0;
 
+app.use('/ui/images', express.static(path.join(__dirname,'ui','images'))); //getting the images from the images directory
+app.use('/ui/css', express.static(path.join(__dirname,'ui','css'))); //getting the stylesheets
+app.use('/ui/js', express.static(path.join(__dirname,'ui','js'))); //get the javascript file
+app.use('/ui/fonts', express.static(path.join(__dirname,'ui','fonts'))); //get any fonts required
+
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'index.html'));
-});
-
-app.get('/ui/style.css', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'style.css'));
-});
-
-app.get('/ui/images/prism', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'images','prism.jpg'));
-});
-
-app.get('/ui/animate.css', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'animate.css'));
+  res.sendFile(path.join(__dirname, 'ui', 'index.html')); //homepage
 });
 
 app.get('/contact', function(req, res){
-	res.send(createTemplate(contact));
+	res.send(createTemplate(contact)); //contacts tab
 });
 
 app.get('/about', function(req, res){
-	res.send(createTemplate(about));
+	res.send(createTemplate(about)); //about tab
 });
 
-app.get('/ui/images/me.jpg', function(req, res){
-	res.sendFile(path.join(__dirname,'ui','images','me.jpg'));
+app.get('/articles', function(req, res){
+	res.sendFile(path.join(__dirname,'ui','articles.html')); //articles tab
 });
+
+
 
 app.get('/ui/main.js', function(req, res){
 	res.sendFile(path.join(__dirname, 'ui','main.js'))
 });
 
-app.get('/articles', function(req, res){
-	res.sendFile(path.join(__dirname,'ui','articles.html'));
-});
+
 
 //Code below is used to add comments to respective lists of the articles page
 
@@ -231,13 +229,6 @@ function articleTemplate(data)
 	return template;
 }
 
-//including bootstrap css file here
-
-app.get('/ui/css/:cssfile', function(req, res)
-{
-	var cssfile=req.params.cssfile;
-	res.sendFile(path.join(__dirname,'ui','css', cssfile));
-});
 
 app.get('/articles/:articleName', function(req, res){
 	var articleName=req.params.articleName;

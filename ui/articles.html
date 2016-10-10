@@ -15,16 +15,18 @@
 		<!-- the jScrollPane script -->
 		<script type="text/javascript" src="script/jquery.jscrollpane.min.js"></script>
 		
-		<!-- BootStrap styles file -->
-		<link href="/ui/css/bootstrap.css" rel="stylesheet"/>
-        <link href="/ui/style.css" rel="stylesheet" />
+		<!-- Bootstrap compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		
+        <link href="/ui/css/style.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     </head>
     <body class="bgimg">
 		<div class="container-fluid">
-			<div class="navigation menu" role="navigation">
+			<div class="navigation menu">
 				<ul>
 
 					<li><a href="/"><p class="bold animated bounceInLeft">Home</p></a></li>
@@ -46,6 +48,7 @@
 			<div class="articles">
 				<div class="scroll-pane">
 					<ol>
+						<br/>
 						<li><a href="/articles/articleOne" target="news">Article 1</a></li>
 						<li><a href="/articles/articleTwo" target="news">Article 2</a></li>
 						<li><a href="/articles/articleThree" target="news">Article 3</a></li>
@@ -81,9 +84,8 @@
 						<textarea class="form-control" id="comment" placeholder="Your Comment" rows="3"></textarea>
 					</div>
 					<button type="submit"  class="btn btn-default" id="submit_btn">Submit</button>
-					<span id="acknowledge" class="whitetext"></span>
 			</div>
-			<script type="text/javascript" src="/ui/main.js">
+			<script type="text/javascript" src="/ui/js/comments.js">
 			</script>
 		</div>
     </body>
