@@ -230,7 +230,7 @@ function articleTemplate(data)
 				<div class="container">
 					${content}
 					<h3>Comments:</h3><hr/>
-					
+					${commentList}
 				</div>
 			</body>
 		</html>`;
