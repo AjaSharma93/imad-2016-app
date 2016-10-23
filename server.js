@@ -210,7 +210,7 @@ function articleTemplate(data)
 			detailsArray[i+4]->Time when comment was posted
 		*/
 	}
-	
+	 */
 	
 	
 	//template for the creation of the article page
