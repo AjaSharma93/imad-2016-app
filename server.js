@@ -190,7 +190,7 @@ function articleTemplate(data)
 	var detailsArray=[];
 	var commentList='';
 	var detailsList='';
-/*	if(comment!= '')
+	if(comment== '')
 	{
 		for(var j=0;j<comment.length;j++)
 		{
@@ -198,7 +198,7 @@ function articleTemplate(data)
 			for(var i=0; i<detailsList.length;i++)
 				detailsArray.push(detailsList[i]); //comments list is parsed to an array of details
 		}
-		for (var i=0; i<detailsArray.length; i=i+5)
+		for ( i=0; i<detailsArray.length; i=i+5)
 		{
 			commentList+='<span class="bold">'+detailsArray[i]+'</span> posted on <span class=italics>'+detailsArray[i+4] +'</span><p>'+detailsArray[i+1]+'</p><hr/>'; //html statement formed from detailsArray
 		}
@@ -209,8 +209,8 @@ function articleTemplate(data)
 			detailsArray[i+3]->Email ID
 			detailsArray[i+4]->Time when comment was posted
 		*/
-	}
-	 */
+	} 
+	
 	
 	
 	//template for the creation of the article page
