@@ -237,8 +237,8 @@ function articleTemplate(data)
 }
 
 var pool = new Pool(config)
-app.get('/articles/:articleName', function(req, res){
-	var articleName=req.params.articleName;
+app.get('/articles/articleOne', function(req, res){
+	//var articleName=req.params.articleName;
 	
 	pool.query("SELECT * FROM article WHERE id=1", function(err, result)
 	{
