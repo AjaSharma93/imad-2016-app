@@ -190,7 +190,7 @@ function articleTemplate(data)
 	var detailsArray=[];
 	var commentList='';
 	var detailsList='';
-	if(comment!= '')
+/*	if(comment!= '')
 	{
 		for(var j=0;j<comment.length;j++)
 		{
@@ -211,6 +211,8 @@ function articleTemplate(data)
 		*/
 	}
 	
+	
+	
 	//template for the creation of the article page
 	var template=`
 	<!doctype html>
@@ -228,7 +230,7 @@ function articleTemplate(data)
 				<div class="container">
 					${content}
 					<h3>Comments:</h3><hr/>
-					${commentList}
+					
 				</div>
 			</body>
 		</html>`;
