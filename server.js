@@ -240,7 +240,7 @@ var pool = new Pool(config)
 app.get('/articles/articleOne', function(req, res){
 	//var articleName=req.params.articleName;
 	
-	pool.query("SELECT * FROM article WHERE id=1", function(err, result)
+	pool.query("SELECT * FROM article WHERE id=1;", function(err, result)
 	{
 	    if(err)
 	    {
@@ -255,7 +255,7 @@ app.get('/articles/articleOne', function(req, res){
 	        else
 	        {
 	            var articleData=result.rows[0];
-	            res.send(articleTemplate(articleData));
+	            res.send(articleData);
 	        }
 	    }
 	    
