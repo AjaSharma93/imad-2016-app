@@ -190,7 +190,7 @@ function articleTemplate(data)
 	var detailsArray=[];
 	var commentList='';
 	var detailsList='';
-	if(comment== '')
+	if(comment!== '')
 	{
 		for(var j=0;j<comment.length;j++)
 		{
@@ -239,29 +239,9 @@ function articleTemplate(data)
 }
 
 var pool = new Pool(config)
-app.get('/articles/articleOne', function(req, res){
-	//var articleName=req.params.articleName;
-	
-	pool.query("SELECT * FROM article WHERE id=1;", function(err, result)
-	{
-	    if(err)
-	    {
-	        res.status(500).send(err.toString());
-	    }
-	    else
-	    {
-	        if(result.rows.length===0)
-	        {
-	            res.status(404).send('Article not found');
-	        }
-	        else
-	        {
-	            var articleData=result.rows[0];
-	            res.send(articleTemplate(articleData));
-	        }
-	    }
-	    
-	});
+app.get('/articles/:articleName', function(req, res){
+	var articleName=req.params.articleName;
+	res.send(articleTemplate(articleArray[articleName]));
 	
 });
 
