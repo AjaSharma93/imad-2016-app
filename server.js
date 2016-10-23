@@ -236,7 +236,7 @@ function articleTemplate(data)
 	return template;
 }
 
-
+var pool = new Pool(config)
 app.get('/articles/:articleName', function(req, res){
 	var articleName=req.params.articleName;
 	
@@ -263,7 +263,7 @@ app.get('/articles/:articleName', function(req, res){
 	
 });
 
-var pool = new Pool(config)
+
 app.get('/test-db', function(req, res)
 {
     pool.query('SELECT * FROM TEST', function(err, result)
