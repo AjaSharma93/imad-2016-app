@@ -1,5 +1,5 @@
 var submit=document.getElementById('submit_btn');
-var details=[];
+/*var details=[];
 submit.onclick=function(){
 	var request=new XMLHttpRequest();
 	var fname=document.getElementById('fname');
@@ -13,7 +13,6 @@ submit.onclick=function(){
 			if(request.status==200)
 			{
 				var success=request.responseText;
-				var acknowledge=document.getElementById('acknowledge');
 				alert('Comment submitted successfully!')
 				details=[];
 				fname.value='';
@@ -29,7 +28,34 @@ submit.onclick=function(){
 	details.push(email);
 	request.open('GET','/commentry?details='+JSON.stringify(details), true);
 	request.send(null);
-};
+}; */
+
+$("#submit_btn").click(function(){
+	var fname=$("#fname");
+	var name=fname.val();
+	var commentInput=$("#comment");
+	var comment=commentInput.val();
+	var emailInput=$("#emailID");
+	var email=emailInput.val();
+	var articlepath=document.getElementById('articleWindow').contentWindow.location.pathname 
+						|| document.getElementById('articleWindow').contentDocument.location.pathname;
+						
+	var details=[];
+	details.push(name);
+	details.push(comment);
+	details.push(articlepath);
+	details.push(email);
+	
+	
+	//send the JSON object(details) to the server using a get request and get a response.
+	$.get("/commentry?details="+JSON.stringify(details), function(data, status){
+        alert(data);
+		fname.val('');
+		commentInput.val('');
+		emailInput.val('');
+    });
+}
+);
 
 
 $(document).ready(function(){

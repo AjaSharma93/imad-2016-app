@@ -3,11 +3,10 @@ var morgan = require('morgan');
 var path = require('path');
 var Pool=require('pg').Pool;
 var config={
-    user:'ajasharma93',
-    database: 'ajasharma93',
-    host: 'db.imad.hasura-app.io',
-    port: '5432',
-    password: process.env.DB_PASSWORD
+    user:'postgres',
+    database: 'postgres',
+    host: 'localhost',
+    password: 'dextermorgan'
 }
 var app = express();
 app.use(morgan('combined'));
@@ -144,10 +143,10 @@ app.get('/commentry', function(req, res)
 					
 	links.push(serverTime);
 	details=JSON.stringify(links); //added server time to JSON object
-	if(link=="/articles/articleOne") art1comments.push(details);             //adding the comments to the 
-	else if(link=="/articles/articleTwo") art2comments.push(details);        //respective articles
-	else if(link=="/articles/articleThree") art3comments.push(details);
-	else if(link=="/articles/articleFour") art4comments.push(details);
+	if(link=="/articles/Article-One") art1comments.push(details);             //adding the comments to the 
+	else if(link=="/articles/Article-Two") art2comments.push(details);        //respective articles
+	else if(link=="/articles/Article-Three") art3comments.push(details);
+	else if(link=="/articles/Article-Four") art4comments.push(details);
 	else res.send('Invalid input');
 	
 	res.send("Comment submitted successfully");
@@ -155,7 +154,7 @@ app.get('/commentry', function(req, res)
 
 //Object with article details
 
-var articleArray={
+/*var articleArray={
 	articleOne: {
 	content: `
 	<h1 style="text-align: center">Article 1</h1>
@@ -180,10 +179,10 @@ var articleArray={
 	<h1 style="text-align: center">Article 4</h1>
 	<p> This is article 4</p>`,
 	comment: art4comments}
-}
+} */
 
 //template for creating articles
-function articleTemplate(data)
+/*function articleTemplate(data)
 {
 	var content=data.content;
 	var comment=data.comment;
@@ -203,13 +202,13 @@ function articleTemplate(data)
 			commentList+='<span class="bold">'+detailsArray[i]+'</span> posted on <span class=italics>'+detailsArray[i+4] +'</span><p>'+detailsArray[i+1]+'</p><hr/>'; //html statement formed from detailsArray
 		}
 		
-		/* 	detailsArray[i]->Name 
-			detailsArray[i+1]->Comment
-			detailsArray[i+2]->Article Path
-			detailsArray[i+3]->Email ID
-			detailsArray[i+4]->Time when comment was posted
-		*/
-	} 
+			//detailsArray[i]->Name 
+			//detailsArray[i+1]->Comment
+			//detailsArray[i+2]->Article Path
+			//detailsArray[i+3]->Email ID
+			//detailsArray[i+4]->Time when comment was posted
+		
+	}
 	
 	
 	
@@ -236,31 +235,93 @@ function articleTemplate(data)
 		</html>`;
 		
 	return template;
+}*/
+
+function articleTemplate2(data, commentData)
+{
+	var articleTitle=data.article_title;
+	var articleHeading=data.article_heading;
+	var articleContent=data.article_content;
+	var publishDate=data.publish_date;
+	var options = { year: 'numeric', month: 'long', day: 'numeric' }; //options as date format specifier
+	var commentList='';
+	for(var i=0; i<commentData.length; i++)
+	{
+		commentList+=`<p class="italics">${commentData[i].comment_author}
+					  posted on ${commentData[i].comment_date.toLocaleTimeString("en-US", options)} </p>
+					  <p>${commentData[i].comment}</p><hr/>`;
+	}
+	var template=`
+	<!doctype html>
+		<html>
+			<head>
+				<title>${articleTitle}</title>
+				<link href="/ui/css/articles.css" rel="stylesheet" />
+				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			</head>
+			<body>
+				<div class="container">
+					<h1 class="center">${articleHeading}</h1>
+					<hr/>
+					<p>${publishDate.toDateString()}</p>
+					<p>${articleContent}</p>
+					<h3>Comments:</h3><hr/>
+					${commentList}
+				</div>
+			</body>
+		</html>`;
+		
+		return template;
+	
 }
 
-var pool = new Pool(config)
+var pool = new Pool(config); //declaring a connection pool for database queries;
 app.get('/articles/:articleName', function(req, res){
-	var articleName=req.params.articleName;
-	res.send(articleTemplate(articleArray[articleName]));
+	var articleName=req.params.articleName; //article name obtained for GET request.
+	pool.query('SELECT * FROM "Articles" where article_title= $1', [articleName], 
+	function(err, result)
+	{
+		if(err)
+		{
+			res.status(500).send(err.toString()); //error occurred during query
+		}
+		else{
+			if(result.rows.length === 0)
+			{
+				res.status(404).send('Article not found'); //for return of no rows
+			}
+			else
+			{
+				var articleData=result.rows[0];
+				
+				pool.query('SELECT * FROM "Comments" where article_title= $1',[articleData.article_title], 
+				function(err, result)
+				{
+				    if(err)
+					{
+						res.status(500).send(err.toString()); //error occurred during query
+					}
+					else
+					{
+						var commentData;
+						if(result.rows.length===0)
+						{
+							commentData=''; //no comments on the article
+						}
+						else
+						{
+							commentData=result.rows;
+						}
+						res.send(articleTemplate2(articleData, commentData));
+					}
+				});
+				
+				
+			}
+		}
+	});
 	
 });
-
-
-app.get('/test-db', function(req, res)
-{
-    pool.query('SELECT * FROM TEST', function(err, result)
-    {
-       if(err)
-       {
-           res.status(500).send(err.toString());
-       }
-       else
-       {
-           res.send(JSON.stringify(result.rows));
-       }
-    });
-});
-
 
 var port = 8080; // Use 8080 for local development because you might already have apache running on 80
 app.listen(8080, function () {
