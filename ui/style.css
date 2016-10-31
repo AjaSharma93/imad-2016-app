@@ -199,3 +199,8 @@ div.navigation li.selected4{
 	border: none;
 	border-radius:5px;
 }
+
+
+#article_list a.clicked {
+    background: yellow;
+}

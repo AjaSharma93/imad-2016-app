@@ -27,3 +27,12 @@ $("#submit_btn").click(function(){
 $(document).ready(function(){
 	$('.scroll-pane').jScrollPane();
 });
+
+
+//addition of articles list text effect
+$(function(){
+    $("#article_list a").bind("click", function(){
+        $("#article_list a").removeClass("clicked"); // Remove all highlights
+        $(this).addClass("clicked"); // Add the class only for actually clicked element
+    });
+});
