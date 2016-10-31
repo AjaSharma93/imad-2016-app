@@ -11,6 +11,8 @@ var config={
 var app = express();
 app.use(morgan('combined'));
 
+var pool = new Pool(config); //declaring a connection pool for database queries;
+
 //details of the about tab
 var about={
 	selected2: 'class="selected2"',
@@ -129,7 +131,7 @@ var art4comments=[];
 
 //adds the comments to the respective article with date and time on recieving request
 
-app.get('/commentry', function(req, res)
+/*app.get('/commentry', function(req, res)
 {
 	var details=req.query.details;
 	var links=JSON.parse(details);
@@ -150,6 +152,45 @@ app.get('/commentry', function(req, res)
 	else res.send('Invalid input');
 	
 	res.send("Comment submitted successfully");
+}); */
+
+
+app.get('/articles/:articleName/commentry', function(req, res)
+{
+	var name=req.query.name;
+	var email=req.query.email;
+	var articleName=req.params.articleName;
+	var comment=req.query.comment;
+	
+	if(name!='' && comment!='')
+	{
+		if(email!='')
+		{
+			var re=/\S+@\S+\.\S+/; //email validation regex
+			var valid= re.test(email); //check the validity against string@string.com
+			if(!valid)
+			{
+				res.send("Invalid Email");
+			}
+		}
+		pool.query('INSERT INTO "Comments" values($1,$2,$3,$4,$5)',['now()',articleName, name, email, comment], 
+		function(err, result)
+		{
+			if(err)
+			{
+				res.send(err.toString());
+			}
+			else
+			{
+				res.send("Comment submitted successfully for "+articleName);
+			}
+		});
+	}
+	else
+	{
+		res.send("Fill in all the details");
+	}
+	
 });
 
 //Object with article details
@@ -275,7 +316,7 @@ function articleTemplate2(data, commentData)
 	
 }
 
-var pool = new Pool(config); //declaring a connection pool for database queries;
+
 app.get('/articles/:articleName', function(req, res){
 	var articleName=req.params.articleName; //article name obtained for GET request.
 	pool.query('SELECT * FROM "Articles" where article_title= $1', [articleName], 

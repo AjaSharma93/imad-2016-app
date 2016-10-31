@@ -39,20 +39,15 @@ $("#submit_btn").click(function(){
 	var email=emailInput.val();
 	var articlepath=document.getElementById('articleWindow').contentWindow.location.pathname 
 						|| document.getElementById('articleWindow').contentDocument.location.pathname;
-						
-	var details=[];
-	details.push(name);
-	details.push(comment);
-	details.push(articlepath);
-	details.push(email);
 	
 	
 	//send the JSON object(details) to the server using a get request and get a response.
-	$.get("/commentry?details="+JSON.stringify(details), function(data, status){
-        alert(data);
-		fname.val('');
-		commentInput.val('');
-		emailInput.val('');
+	$.get(articlepath+"/commentry?name="+name+"&comment="+comment+"&email="+email,
+		function(data, status){
+			alert(data);
+			fname.val('');
+			commentInput.val('');
+			emailInput.val('');
     });
 }
 );
