@@ -290,7 +290,7 @@ function articleTemplate2(data, commentData)
 	for(var i=0; i<commentData.length; i++)
 	{
 		commentList+=`<p class="italics">${commentData[i].comment_author}
-					  posted on ${commentData[i].comment_date.toLocaleTimeString("en-US", options)} </p>
+					  posted on ${commentData[i].comment_date.toLocaleTimeString([], options)} </p>
 					  <p>${commentData[i].comment}</p><hr/>`;
 	}
 	var template=`
