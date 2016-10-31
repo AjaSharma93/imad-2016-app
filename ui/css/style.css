@@ -208,5 +208,5 @@ div.navigation li.selected4{
 }
 
 .clicked {
-    background: yellow;
+    border-bottom: red;
 }
