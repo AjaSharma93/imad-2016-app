@@ -201,6 +201,6 @@ div.navigation li.selected4{
 }
 
 
-#article_list a.clicked {
-    background: yellow;
+.clicked {
+    border-bottom: 1px solid red;
 }
