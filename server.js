@@ -278,7 +278,7 @@ app.get('/articles/:articleName/commentry', function(req, res)
 		
 	return template;
 }*/
-process.env.TZ = 'Europe/Amsterdam'; 
+
 function articleTemplate2(data, commentData)
 {
 	var articleTitle=data.article_title;
