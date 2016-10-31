@@ -285,12 +285,13 @@ function articleTemplate2(data, commentData)
 	var articleHeading=data.article_heading;
 	var articleContent=data.article_content;
 	var publishDate=data.publish_date;
-	var options = { year: 'numeric', month: 'long', day: 'numeric' }; //options as date format specifier
+	var options = { year: 'numeric', month: 'long', day: 'numeric',
+	                hours: 'numeric', minutes: 'numeric'}; //options as date format specifier
 	var commentList='';
 	for(var i=0; i<commentData.length; i++)
 	{
 		commentList+=`<p class="italics">${commentData[i].comment_author}
-					  posted on ${commentData[i].comment_date.toLocaleTimeString([], options)} </p>
+					  posted on ${commentData[i].comment_date.toLocaleTimeString("en-US", options)} </p>
 					  <p>${commentData[i].comment}</p><hr/>`;
 	}
 	var template=`
