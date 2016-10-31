@@ -206,3 +206,7 @@ div.navigation li.selected4{
 	width:40%;
 	height:40%;
 }
+
+.clicked {
+    background: yellow;
+}
