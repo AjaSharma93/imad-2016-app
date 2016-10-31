@@ -123,39 +123,7 @@ app.get('/ui/main.js', function(req, res){
 
 
 
-//Code below is used to add comments to respective lists of the articles page
-
-/*var art1comments=[];
-var art2comments=[];
-var art3comments=[];
-var art4comments=[];*/
-
-//adds the comments to the respective article with date and time on recieving request
-
-/*app.get('/commentry', function(req, res)
-{
-	var details=req.query.details;
-	var links=JSON.parse(details);
-	var link=links[2];
-	var currentDate=new Date();//parse the current date and time of the server
-	
-	//get the date and time in the following format: DD:MM:YYYY HH:MM:SS TimeZone 
-	var serverTime= currentDate.getDate()+"/"+(currentDate.getMonth()+1)+"/"+currentDate.getFullYear()+" " 
-					+currentDate.getHours()+":"+currentDate.getMinutes()+":"+currentDate.getSeconds()+" "
-					+currentDate.toString().split('(')[1].slice(0, -1)  //gets the time zone
-					
-	links.push(serverTime);
-	details=JSON.stringify(links); //added server time to JSON object
-	if(link=="/articles/Article-One") art1comments.push(details);             //adding the comments to the 
-	else if(link=="/articles/Article-Two") art2comments.push(details);        //respective articles
-	else if(link=="/articles/Article-Three") art3comments.push(details);
-	else if(link=="/articles/Article-Four") art4comments.push(details);
-	else res.send('Invalid input');
-	
-	res.send("Comment submitted successfully");
-}); */
-
-
+//Code below is used to add comments to respective articles page
 app.get('/articles/:articleName/commentry', function(req, res)
 {
 	var name=req.query.name;
@@ -167,7 +135,7 @@ app.get('/articles/:articleName/commentry', function(req, res)
 	{
 		if(email!=='')
 		{
-			var re=/\S+@\S+\.\S+/; //email validation regex
+			var re=/\S+@\S+\.\S+/; //simple email validation regex
 			var valid= re.test(email); //check the validity against string@string.com
 			if(!valid)
 			{
@@ -194,98 +162,13 @@ app.get('/articles/:articleName/commentry', function(req, res)
 	
 });
 
-//Object with article details
-
-/*var articleArray={
-	articleOne: {
-	content: `
-	<h1 style="text-align: center">Article 1</h1>
-	<p> This is the content of article 1.This is the content of article 1.This is the content of article 1.This is the content of article 1.
-	This is the content of article 1.This is the content of article 1.This is the content of article 1. </p>`,
-	comment: art1comments },
-	
-	articleTwo:{ 
-	content:`
-	<h1 style="text-align: center">Article 2</h1>
-	<p> This is article 2</p>`, 
-	comment: art2comments},
-	
-	articleThree:{ 
-	content: `
-	<h1 style="text-align: center">Article 3</h1>
-	<p> This is article 3</p>`,
-	comment: art3comments},
-	
-	articleFour:{
-	content: `
-	<h1 style="text-align: center">Article 4</h1>
-	<p> This is article 4</p>`,
-	comment: art4comments}
-} */
-
 //template for creating articles
-/*function articleTemplate(data)
-{
-	var content=data.content;
-	var comment=data.comment;
-	var detailsArray=[];
-	var commentList='';
-	var detailsList='';
-	if(comment!== '')
-	{
-		for(var j=0;j<comment.length;j++)
-		{
-			detailsList=JSON.parse(comment[j]); //parse the comments JSON object
-			for(var i=0; i<detailsList.length;i++)
-				detailsArray.push(detailsList[i]); //comments list is parsed to an array of details
-		}
-		for ( i=0; i<detailsArray.length; i=i+5)
-		{
-			commentList+='<span class="bold">'+detailsArray[i]+'</span> posted on <span class=italics>'+detailsArray[i+4] +'</span><p>'+detailsArray[i+1]+'</p><hr/>'; //html statement formed from detailsArray
-		}
-		
-			//detailsArray[i]->Name 
-			//detailsArray[i+1]->Comment
-			//detailsArray[i+2]->Article Path
-			//detailsArray[i+3]->Email ID
-			//detailsArray[i+4]->Time when comment was posted
-		
-	}
-	
-	
-	
-	//template for the creation of the article page
-	var template=`
-	<!doctype html>
-		<html>
-			<head>
-				<link href="/ui/css/articles.css" rel="stylesheet" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			</head>
-			<style type="text/css">
-			body{
-				font-family: Georgia, serif;
-			}
-			</style>
-			<body>
-				<div class="container">
-					${content}
-					<h3>Comments:</h3><hr/>
-					${commentList}
-				</div>
-			</body>
-		</html>`;
-		
-	return template;
-}*/
-
-function articleTemplate2(data, commentData)
+function articleTemplate(data, commentData)
 {
 	var articleTitle=data.article_title;
 	var articleHeading=data.article_heading;
 	var articleContent=data.article_content;
 	var publishDate=data.publish_date;
-	var options = { year: 'numeric', month: 'long', day: 'numeric'}; //options as date format specifier
 	var commentList='';
 	for(var i=0; i<commentData.length; i++)
 	{
@@ -355,7 +238,7 @@ app.get('/articles/:articleName', function(req, res){
 						{
 							commentData=result.rows;
 						}
-						res.send(articleTemplate2(articleData, commentData));
+						res.send(articleTemplate(articleData, commentData));
 					}
 				});
 				
