@@ -320,7 +320,7 @@ function articleTemplate2(data, commentData)
 
 app.get('/articles/:articleName', function(req, res){
 	var articleName=req.params.articleName; //article name obtained for GET request.
-	pool.query('SELECT * FROM Articles where article_title= $1', [articleName], 
+	pool.query('SELECT * FROM "Articles" where article_title= $1', [articleName], 
 	function(err, result)
 	{
 		if(err)
