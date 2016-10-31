@@ -93,7 +93,6 @@ function createTemplate(data){
 	return htmlTemplate;
 }
 
-counter=0;
 
 app.use('/ui/images', express.static(path.join(__dirname,'ui','images'))); //getting the images from the images directory
 app.use('/ui/css', express.static(path.join(__dirname,'ui','css'))); //getting the stylesheets
@@ -126,10 +125,10 @@ app.get('/ui/main.js', function(req, res){
 
 //Code below is used to add comments to respective lists of the articles page
 
-var art1comments=[];
+/*var art1comments=[];
 var art2comments=[];
 var art3comments=[];
-var art4comments=[];
+var art4comments=[];*/
 
 //adds the comments to the respective article with date and time on recieving request
 
@@ -164,9 +163,9 @@ app.get('/articles/:articleName/commentry', function(req, res)
 	var articleName=req.params.articleName;
 	var comment=req.query.comment;
 	
-	if(name!='' && comment!='')
+	if(name!=='' && comment!=='')
 	{
-		if(email!='')
+		if(email!=='')
 		{
 			var re=/\S+@\S+\.\S+/; //email validation regex
 			var valid= re.test(email); //check the validity against string@string.com
@@ -321,7 +320,7 @@ function articleTemplate2(data, commentData)
 
 app.get('/articles/:articleName', function(req, res){
 	var articleName=req.params.articleName; //article name obtained for GET request.
-	pool.query('SELECT * FROM "Articles" where article_title= $1', [articleName], 
+	pool.query('SELECT * FROM Articles where article_title= $1', [articleName], 
 	function(err, result)
 	{
 		if(err)
