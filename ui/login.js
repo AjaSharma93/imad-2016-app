@@ -15,5 +15,5 @@ $("#submit_btn").click(function(){
         fail: function(){
             alert("failed");
         }
-    })
+    });
    });
