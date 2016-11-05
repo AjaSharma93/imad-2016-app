@@ -7,12 +7,12 @@ $("#submit_btn").click(function(){
         url: "/login",
         type: "POST",
         data: {username: user, password: pass},
-        contentType: "application/json; charset=UTF-8;",
+        contentType: "application/json",
         success: function(data){
             alert(data.toString());
         },
-        fail: function(data){
-            alert(data.toString());
+        error: function(errorThrown){
+            alert(errorThrown.toString());
         }
     });
    });
