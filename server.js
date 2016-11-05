@@ -63,16 +63,22 @@ app.post('/login', function(req, res)
         }
         else
         {
-            var dbString=result.rows[0].password;
-            var salt=db.split('$')[2];
-            var hashedPassoword=hash(password, salt);
-            if(hashedPassword===dbString)
+            if(result.rows.length===0)
             {
-                res.send('Credentials are correct');
+                 res.status(403).send('Username/Password is incorrect');
             }
-            else
-            {
-                res.status(403).send('Username/Password is incorrect');
+            else{
+                var dbString=result.rows[0].password;
+                var salt=db.split('$')[2];
+                var hashedPassoword=hash(password, salt); //creating a passwor based on the password and the original salt
+                if(hashedPassword===dbString)
+                {
+                    res.send('Credentials are correct');
+                }
+                else
+                {
+                    res.status(403).send('Username/Password is incorrect');
+                }
             }
         }
     } );
