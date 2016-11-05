@@ -2,12 +2,18 @@
 $("#submit_btn").click(function(){
     var user=$("#username").val();
     var pass=$("#password").val();
-    $.post("/login", {username: user, password: pass},
-        function(data)
-          {
+            
+    $.ajax({
+        url: "/login",
+        type: "POST",
+        datatype:"json",
+        data: JSON.stringify({username: user, password: pass}),
+        contentType: "application/json; charset=UTF-8;",
+        success: function(){
             alert(data.toString());
-          }, "json")
-            .fail(function(){
-              alert("failed");
-            });
+        },
+        fail: function(){
+            alert("failed");
+        }
+    })
    });
