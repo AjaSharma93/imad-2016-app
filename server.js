@@ -2,6 +2,7 @@ var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
 var Pool=require('pg').Pool;
+var crypto=require('crypto');
 
 var config={
     user:'ajasharma93',
@@ -14,6 +15,18 @@ var app = express();
 app.use(morgan('combined'));
 
 var pool = new Pool(config); //declaring a connection pool for database queries;
+
+function hash(input, salt)
+{
+    hashed=crypto.pbkdf2Sync(input, salt, 10000, 512, 'sha512');
+    return hashed.toString('hex');
+}
+
+app.get('/hash/:input', function(req, res){
+   var hashedString=hash(req.params.input, 'this-is-some-random-string');
+   res.send(hashedString);
+});
+
 
 //details of the about tab
 var about={
@@ -248,6 +261,8 @@ app.get('/articles/:articleName', function(req, res){
 	});
 	
 });
+
+
 
 var port = 8080; // Use 8080 for local development because you might already have apache running on 80
 app.listen(8080, function () {
