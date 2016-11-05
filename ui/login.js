@@ -1,6 +1,6 @@
 var user=$("#username").val();
 var pass=$("#password").val();
-$("#submit_btn").click(function{
+$("#submit_btn").click(function(){
   $.post("/login", {username: user, password: pass},
     function(data)
       {
