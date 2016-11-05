@@ -50,6 +50,34 @@ app.post('/create-user', function(req, res)
     
 });
 
+app.post('/login', function(req, res)
+{
+    var username=req.body.username;
+    var password=req.body.password;
+    
+    pool.query('SELECT * FROM "users" where username=$1', [username], 
+    function(err, result){
+         if(err)
+        {
+            res.status(500).send(err.toString());
+        }
+        else
+        {
+            var dbString=result.rows[0].password;
+            var salt=db.split('$')[2];
+            var hashedPassoword=hash(password, salt);
+            if(hashedPassword===dbString)
+            {
+                res.send('Credentials are correct');
+            }
+            else
+            {
+                res.status(403).send('Username/Password is incorrect');
+            }
+        }
+    } );
+});
+
 
 //details of the about tab
 var about={
