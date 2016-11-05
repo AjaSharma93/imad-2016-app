@@ -7,7 +7,7 @@ $("#submit_btn").click(function(){
         url: "/login",
         type: "POST",
         content: "json",
-        data: {username: user, password: pass},
+        data: JSON.stringify({username: user, password: pass}),
         contentType: "application/json",
         success: function(data){
             alert(data.toString());
