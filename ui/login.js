@@ -8,11 +8,11 @@ $("#submit_btn").click(function(){
         type: "POST",
         data: {username: user, password: pass},
         contentType: "application/json; charset=UTF-8;",
-        success: function(){
+        success: function(data){
             alert(data.toString());
         },
-        fail: function(){
-            alert("failed");
+        fail: function(data){
+            alert(data.toString());
         }
     });
    });
