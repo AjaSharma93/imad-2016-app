@@ -6,13 +6,14 @@ $("#submit_btn").click(function(){
     $.ajax({
         url: "/login",
         type: "POST",
+        content: "json",
         data: {username: user, password: pass},
         contentType: "application/json",
         success: function(data){
             alert(data.toString());
         },
-        error: function(errorThrown){
-            alert(errorThrown.toString());
+        error: function(xhr, status, errorThrown){
+            alert(xhr.responseText);
         }
     });
    });
