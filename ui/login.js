@@ -6,8 +6,7 @@ $("#submit_btn").click(function(){
     $.ajax({
         url: "/login",
         type: "POST",
-        datatype:"json",
-        data: JSON.stringify({username: user, password: pass}),
+        data: {username: user, password: pass},
         contentType: "application/json; charset=UTF-8;",
         success: function(){
             alert(data.toString());
