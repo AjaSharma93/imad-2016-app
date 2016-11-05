@@ -186,6 +186,14 @@ app.get('/articles', function(req, res){
 });
 
 
+app.get('/login.html', function(req, res){
+	res.sendFile(path.join(__dirname,'ui','login.html')); //Login page
+});
+
+app.get('/ui/login.js', function(req, res){
+	res.sendFile(path.join(__dirname,'ui','login.js')); //Login page
+});
+
 
 app.get('/ui/main.js', function(req, res){
 	res.sendFile(path.join(__dirname, 'ui','main.js'))
