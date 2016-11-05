@@ -3,5 +3,8 @@ $("#submit_btn").click(function{
     function(data)
       {
         alert(data.toString());
-      }, "json");
+      }, "json")
+        .fail(function(){
+          alert("failed");
+        });
    });
