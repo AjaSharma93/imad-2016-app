@@ -324,7 +324,7 @@ app.get('/ui/main.js', function(req, res){
 
 app.get('/ui/css/style.css', function(req, res)
 {
-	res.sendFile(path.join(__dirname,'ui', 'style.css');
+	res.sendFile(path.join(__dirname,'ui', 'style.css'));
 });
 
 //Code below is used to add comments to respective articles page
