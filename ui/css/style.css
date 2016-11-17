@@ -1,15 +1,17 @@
 html, body {
     font-family: Georgia, serif;
-	
+	height:100%;
 }
 
 .bgimg{
 		background-image: url(/ui/images/background.png);
 		background-repeat: repeat;
 		}
+		
 div.menu{
 	position: fixed;
 }
+
 .centeredtext {
 	margin-top:200px;
     text-align:center;
@@ -64,10 +66,17 @@ div.navigation {
 	color:inherit;
 }
 
+.right{
+	float:right;
+}
+
+.left{
+	float:left;
+}
+
 div.navigation li{
 	margin-top:10px;
 	margin-right:20px;
-	float:left;
 	border: 1px solid #dee22e;
 	color: #dee22e;
 	border-radius: 4px;
@@ -78,6 +87,7 @@ div.navigation li{
 	line-height:1em;
 	transition: border-color 0.2s linear;
 }
+
 
 div.navigation li:nth-child(2){
 	border-color: #f55c31;
@@ -92,6 +102,15 @@ div.navigation li:nth-child(3){
 div.navigation li:nth-child(4){
 	border-color: #ae81ff;
 	color:#ae81ff;
+}
+
+div.navigation span li:nth-child(1){
+	border-color: #54ce3f;
+	color:#54ce3f;
+}
+
+#login span{
+	padding-right: 20px;
 }
 
 div.navigation li:not(:hover){
@@ -118,11 +137,9 @@ div.navigation li.selected4{
 	color: #272822;
 }
 
-#Share{
-	float:right;
-	left:100%;
-	top:0;
-	border: 0;
+div.navigation li.selected5{
+	background: #54ce3f;
+	color: #272822;
 }
 
 #wrapper{
@@ -209,4 +226,26 @@ div.navigation li.selected4{
 
 .clicked {
     border-bottom: 1px solid red;
+}
+
+#Social{
+	right:0;
+	top: 150px;
+	position:fixed;
+	border: 2px solid #795032;
+	border-width: 2px 0px 2px 2px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background: #906f56;
+}
+
+#Social ul, #Social li{
+	margin: 8px;
+	padding:0;
+}
+
+#Share{
+	list-style-type: none;
 }

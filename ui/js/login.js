@@ -1,4 +1,4 @@
-
+//login page
 $("#submit_btn").click(function(){
     var user=$("#username").val();
     var pass=$("#password").val();
@@ -11,9 +11,10 @@ $("#submit_btn").click(function(){
         contentType: "application/json",
         success: function(data){
             alert(data.toString());
+			window.location.href="/";
         },
         error: function(xhr, status, errorThrown){
-            alert(xhr.responseText);
+			alert(xhr.responseText);
         }
     });
    });

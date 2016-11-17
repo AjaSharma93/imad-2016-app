@@ -1,0 +1,31 @@
+.vertical-align {
+   
+    display: flex;
+    align-items: center;
+	min-height: 100%;  /* Fallback for vh unit */
+	min-height: 100vh;
+	justify-content : center;
+	margin-bottom:0;
+}
+
+div.vertical-align ul
+{
+	width: 500px;
+}
+
+div.vertical-align ul
+{
+	list-style-type: none;
+}
+
+div.vertical-align ul li a{
+	color: white;
+}
+
+div.vertical-align ul li a:hover{
+	color: orange;
+}
+
+.center{
+	text-align:center;
+}

@@ -7,11 +7,11 @@ var bodyParser=require('body-parser');
 var session=require('express-session');
 
 var config={
-    user:'ajasharma93',
-    database: 'ajasharma93',
-    host: 'db.imad.hasura-app.io',
-    port: '5432',
-    password: process.env.DB_PASSWORD
+	user: 'ajasharma93',
+	host: 'db.imad.hasura-app.io',
+	port: '5432',
+	database: 'ajasharma93',
+	password: process.env.DB_PASSWORD;
 }
 var app = express();
 
@@ -24,35 +24,59 @@ app.use(session({
 
 var pool = new Pool(config); //declaring a connection pool for database queries;
 
-function hash(input, salt)
+function hash(pass, salt)
 {
-    hashed=crypto.pbkdf2Sync(input, salt, 10000, 512, 'sha512');
-    return ['pbkdf2', '10000', salt,hashed.toString('hex')].join("$");
+	hashedString=crypto.pbkdf2Sync(pass, salt, 10000, 512, 'SHA512');
+	return ['pdkdf2', '10000', salt, hashedString.toString('hex') ].join('$');
 }
 
-app.get('/hash/:input', function(req, res){
-   var hashedString=hash(req.params.input, 'this-is-some-random-string');
-   res.send(hashedString);
+app.get("/hash/:keyString", function(req, res)
+{
+	keyString=req.params.keyString;
+	salt=crypto.randomBytes(128).toString('hex');
+	res.send(hash(keyString, salt));
 });
 
 app.post('/create-user', function(req, res)
 {
     var username=req.body.username;
+	var emailID=req.body.email;
     var password=req.body.password;
     var salt= crypto.randomBytes(128).toString('hex');
     var dbString= hash(password, salt);
-    pool.query('INSERT INTO "users" (username, password) VALUES($1, $2)', [username, dbString],
-    function(err, result)
-    {
-        if(err)
-        {
-            res.status(500).send(err.toString());
-        }
-        else
-        {
-            res.send('User successfully created: ' + username);
-        }
-    });
+	if(username!=='' && password!=='')
+	{
+		if(emailID!=='')
+		{
+			var re=/\S+@\S+\.\S+/; //simple email validation regex
+			var valid= re.test(emailID); //check the validity against string@string.com
+			if(!valid)
+			{
+				res.status(403).send("FAILED: Invalid Email");
+			}
+			else
+			{
+				pool.query('INSERT INTO "users" (username, email ,password) VALUES($1, $2, $3)', [username, emailID, dbString],
+				function(err, result)
+				{
+					if(err)
+					{
+						res.status(500).send(err.toString());
+					}
+					else
+					{
+						res.send('User successfully created: ' + username);
+					}
+				});
+			}
+		}
+		else{
+			res.status(403).send("FAILED: Enter your email");
+		}
+	}
+	else{
+		res.status(403).send("FAILED: Enter your details");
+	}
     
 });
 
@@ -76,7 +100,7 @@ app.post('/login', function(req, res)
             else{
                 var dbString=result.rows[0].password;
                 var salt=dbString.split('$')[2];
-                var hashedPassword=hash(password, salt); //creating a passwor based on the password and the original salt
+                var hashedPassword=hash(password, salt); //creating a password based on the password and the original salt
                 if(hashedPassword===dbString)
                 {
                     req.session.auth={userId: result.rows[0].id};
@@ -92,26 +116,83 @@ app.post('/login', function(req, res)
 });
 
 
+function getUser(userId, callback) //get a username (and other details) from user ID
+{
+	 pool.query('SELECT username from users where id=$1', [userId], 
+	   function(err, result)
+	   {
+		   if(err)
+			{
+				callback("error");
+			}
+			else
+			{
+				callback(result.rows[0].username);
+			}
+	   });
+}
+
+
 app.get('/check-login', function(req, res){
    if(req.session && req.session.auth && req.session.auth.userId)
    {
-       res.send ('You are logged in as '+ req.session.auth.userId );
+       getUser(req.session.auth.userId, function(data){
+			if(data!=="error")
+			{
+				  res.send(`<li class="right"><a href="/logout"><p class="bold animated bounceInRight">Logout</p></li>
+							<span class="right neontext whitetext">Logged in: ${data} </span>`);
+			}	
+			else
+			{
+				res.send('error occured');
+			}
+	   });
    }
    else
    {
-       res.send('You are not logged in');
+       res.send('<li class="right"><a href="/login.html"><p class="bold animated bounceInRight">Login/Register</p></li>');
    }
 });
 
 app.get('/logout', function(req, res){
    delete req.session.auth;
-   res.send('Logged out');
+   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
+});
+
+app.get('/comments-authenticate', function(req, res){
+   if(req.session && req.session.auth && req.session.auth.userId)
+   {
+			getUser(req.session.auth.userId, function(user)
+			{
+				if(user !== "error")
+				{
+				var comments= `
+				<h3 class="whitetext">Add a comment:</h3>
+					<p class="whitetext">You are logged in as ${user}</p>
+					<div class="form-group">
+						<label for="comment" class="sr-only">Comment:</label>
+						<textarea class="form-control" id="comment" placeholder="Your Comment" rows="3"></textarea>
+					</div>
+					<button type="submit"  class="btn btn-default" id="submit_btn">Submit</button>
+					<script type="text/javascript" src="/ui/js/comments.js">
+					</script>`;
+				res.send (comments);
+				}
+				else{
+					res.send('Error occurred');
+				}
+			});
+   }
+   else
+   {
+       res.send('<h3 class="whitetext">Login to post comments</h3>');
+   }
 });
 
 
 //details of the about tab
 var about={
-	selected2: 'class="selected2"',
+	selected2: 'selected2',
 	content:`
 	<div class="inline">
 		<img class="resizeProfileImg" src="/ui/images/me.jpg" alt="My Profile">
@@ -128,7 +209,7 @@ var about={
 
 //details of the contact tab
 var contact={
-	selected3: 'class="selected3"',
+	selected3: 'selected3',
 	content:`
 	<div class="centeredtext text-big whitetext neontext">
 		<p>
@@ -163,25 +244,29 @@ function createTemplate(data){
 		<body class="bgimg">
 			<div class="navigation menu">
 				<ul>
-					<li ${selected1}><a href="/" ><p class="bold animated bounceInLeft">Home</p></a></li>
-					<li ${selected2}><a href="/about"  ><p class="bold animated bounceInLeft">About Me</p></a></li>
-					<li ${selected3}><a href="/contact" ><p class="bold animated bounceInLeft">Contact</p></a></li>
-					<li ${selected4}><a href="/articles"><p class="bold animated bounceInLeft">Articles</p></a></li>
-					<li id="Share" class="animated bounceInRight">
+					<li class="${selected1} left"><a href="/"><p class="bold animated bounceInLeft">Home</p></a></li>
+					<li class="${selected2} left"><a href="/about"><p class="bold animated bounceInLeft">About Me</p></a></li>
+					<li class="${selected3} left"><a href="/contact"><p class="bold animated bounceInLeft">Contact</p></a></li>
+					<li class="${selected4} left"><a href="/articles"><p class="bold animated bounceInLeft">Articles</p></a></li>
+					<span id="login"></span>
+				</ul>
+			</div>
+			${content}
+			<div id="Social">
+				<ul>
+					<li id="Share" class="bold whitetext">Follow:</li>
+					<li id="Share">
 						<a href="https://twitter.com/ajasharma1101" target="_blank" style="text-decoration:none;">
 						<img src="https://g.twimg.com/dev/documentation/image/Twitter_logo_blue_32.png" alt="Twitter" style="border:0;width:32px;height:32px"></a>
 					</li>
-					<li id="Share" class="animated bounceInRight">
+					<li id="Share">
 						<a href="//plus.google.com/u/0/106415896484965862024?prsrc=3"rel="publisher" target="_blank" style="text-decoration:none;">
 						<img src="//ssl.gstatic.com/images/icons/gplus-32.png" alt="Google+" style="border:0;width:32px;height:32px;"/>
 						</a>
 					</li>
-					<li id="Share" class="bold"><p class="animated bounceInRight">Follow me on</p><li>
 				</ul>
-			</div>
-			${content}
-			<script type="text/javascript" src="/ui/main.js">
-			</script>
+		</div>
+		<script src="/ui/js/authentication.js"></script>
 		</body>
 	</html>	`;
 	return htmlTemplate;
@@ -211,11 +296,25 @@ app.get('/articles', function(req, res){
 
 
 app.get('/login.html', function(req, res){
+	if(req.session && req.session.auth && req.session.auth.userId)
+	{
+		res.sendFile(path.join(__dirname, 'ui','index.html'));
+	}
+	else
+	{
 	res.sendFile(path.join(__dirname,'ui','login.html')); //Login page
+	}
 });
 
-app.get('/ui/login.js', function(req, res){
-	res.sendFile(path.join(__dirname,'ui','login.js')); //Login page
+app.get('/register.html', function(req, res){
+	if(req.session && req.session.auth && req.session.auth.userId)
+	{
+		res.sendFile(path.join(__dirname, 'ui','index.html'));
+	}
+	else
+	{
+	res.sendFile(path.join(__dirname,'ui','register.html')); //register page
+	}
 });
 
 
@@ -228,38 +327,37 @@ app.get('/ui/main.js', function(req, res){
 //Code below is used to add comments to respective articles page
 app.get('/articles/:articleName/commentry', function(req, res)
 {
-	var name=req.query.name;
-	var email=req.query.email;
 	var articleName=req.params.articleName;
 	var comment=req.query.comment;
 	
-	if(name!=='' && comment!=='')
+	if(comment!=='')
 	{
-		if(email!=='')
+		if(req.session && req.session.auth && req.session.auth.userId )
 		{
-			var re=/\S+@\S+\.\S+/; //simple email validation regex
-			var valid= re.test(email); //check the validity against string@string.com
-			if(!valid)
-			{
-				res.send("Invalid Email");
-			}
-		}
-		pool.query('INSERT INTO "Comments" values($1,$2,$3,$4,$5)',['now()',articleName, name, email, comment], 
-		function(err, result)
+		getUser(req.session.auth.userId, function(user){
+		if(user!="error")
 		{
-			if(err)
-			{
-				res.send(err.toString());
-			}
-			else
-			{
-				res.send("Comment submitted successfully for "+articleName);
+			pool.query('INSERT INTO "Comments"(comment_date, article_title, comment_author, comment) values($1,$2,$3,$4)',['now()',articleName, user, comment], 
+				function(err, result)
+				{
+					if(err)
+					{
+						res.send(err.toString());
+					}
+					else
+					{
+						res.send("Comment submitted successfully for "+articleName);
+					}
+				});
 			}
 		});
+		}else{
+			res.send("You are not logged in");
+		}
 	}
 	else
 	{
-		res.send("Fill in all the details");
+		res.send("Cannot make an empty comment.");
 	}
 	
 });
