@@ -7,10 +7,10 @@ var bodyParser=require('body-parser');
 var session=require('express-session');
 
 var config={
-	user: 'ajasharma93',
+	user: 'Ajasharma93',
 	host: 'db.imad.hasura-app.io',
-	port: '5432',
-	database: 'ajasharma93',
+	port:'5432',
+	database: 'Ajasharma93',
 	password: process.env.DB_PASSWORD
 }
 var app = express();
@@ -37,45 +37,118 @@ app.get("/hash/:keyString", function(req, res)
 	res.send(hash(keyString, salt));
 });
 
+function checkUsername(username, cb){
+	re = /^\w+$/;
+	if(re.test(username))
+	{
+		pool.query('SELECT * FROM users WHERE LOWER(username)=LOWER($1)', [username], 
+		function(err, result){
+			if(err)
+			{
+				cb("error occurred");			
+			}
+			else{
+				if(result.rows.length===0)
+				{
+					cb(true);
+				}
+				else{
+					cb(false);
+				}
+			}
+		});
+	}
+	else{
+		cb('invalid');
+	}
+}
+
+function checkEmail(email, cb){
+	var re=/\S+@\S+\.\S+/;
+	if(re.test(email))
+	{
+		pool.query('SELECT * FROM users WHERE LOWER(email)=LOWER($1)',[email],
+			function(err, result){
+				if(err)
+				{
+					cb("error occurred");		
+				}
+				else{
+					if(result.rows.length===0)
+					{
+						cb(true);
+					}
+					else{
+						cb(false);
+					}
+			}
+		});
+	}else{
+		cb('invalid');
+	}
+}
+
 app.post('/create-user', function(req, res)
 {
     var username=req.body.username;
-	var emailID=req.body.email;
+	var email=req.body.email;
     var password=req.body.password;
     var salt= crypto.randomBytes(128).toString('hex');
     var dbString= hash(password, salt);
-	if(username!=='' && password!=='')
+	if(username!=='' && password!=='' && email!=='')
 	{
-		if(emailID!=='')
-		{
-			var re=/\S+@\S+\.\S+/; //simple email validation regex
-			var valid= re.test(emailID); //check the validity against string@string.com
-			if(!valid)
+		checkUsername(username, function(userData){
+			console.log(userData);
+			if(userData===true)
 			{
-				res.status(403).send("FAILED: Invalid Email");
-			}
-			else
-			{
-				pool.query('INSERT INTO "users" (username, email ,password) VALUES($1, $2, $3)', [username, emailID, dbString],
-				function(err, result)
-				{
-					if(err)
+				
+				checkEmail(email, function(emailData){
+					console.log(emailData);
+					if(emailData===true)
 					{
-						res.status(500).send(err.toString());
+						pool.query('INSERT INTO "users" (username, email ,password) VALUES($1, $2, $3)', [username, email, dbString],
+						function(err, result)
+						{
+							if(err)
+							{
+								res.status(500).send(err.toString());
+							}
+							else
+							{
+								res.send('User successfully created: ' + username);
+							}
+						});
 					}
-					else
-					{
-						res.send('User successfully created: ' + username);
+					else{
+						if(emailData==='invalid')
+						{
+							res.status(403).send('email invalid');
+						}
+						else if(emailData==false){
+						res.status(403).send('email taken');
+						}
+						else{
+							res.status(403).send(emailData);
+						}
 					}
 				});
 			}
-		}
-		else{
-			res.status(403).send("FAILED: Enter your email");
-		}
+			else{
+				if(userData==='invalid')
+				{
+					res.status(403).send('username invalid');
+				}
+				else if(userData==false){
+					res.status(403).send('username taken');
+				}
+				else{
+					res.status(403).send(userData);
+				}
+			}
+		});		
 	}
 	else{
-		res.status(403).send("FAILED: Enter your details");
+		res.status(403).send('enter your details');
 	}
     
 });
@@ -131,6 +204,7 @@ function getUser(userId, callback) //get a username (and other details) from use
 			}
 	   });
 }
+
 
 
 app.get('/check-login', function(req, res){
