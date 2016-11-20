@@ -9,7 +9,7 @@ var session=require('express-session');
 var config={
 	user: 'ajasharma93',
 	host: 'db.imad.hasura-app.io',
-	port:'5432',
+	port: '5432',
 	database: 'ajasharma93',
 	password: process.env.DB_PASSWORD
 }
@@ -219,9 +219,9 @@ app.get('/check-login', function(req, res){
 							<div class="right dropdown">
 								<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">${data}
 								<span class="caret"></span></button>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<p class="center dropdown-menu" aria-labelledby="dropdownMenuButton">
 								 <a class= "dropdown-item" href="/logout">Logout</a>
-								</div>
+								</p>
 							 </div>`);
 			}	
 			else

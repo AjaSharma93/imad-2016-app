@@ -256,3 +256,7 @@ div.dropdown{
 	margin-right: 50px;
 	margin-top:10px;
 }
+
+.dropdown-menu {
+  min-width: 100px;
+}
