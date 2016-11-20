@@ -7,11 +7,11 @@ var bodyParser=require('body-parser');
 var session=require('express-session');
 
 var config={
-	user: 'Ajasharma93',
+	user: 'ajasharma93',
 	host: 'db.imad.hasura-app.io',
 	port:'5432',
-	database: 'Ajasharma93',
-	password: process.env.DB_PASSWORD
+	database: 'ajasharma93',
+	password: process.env.DB_PASSWORD;
 }
 var app = express();
 
@@ -213,8 +213,16 @@ app.get('/check-login', function(req, res){
        getUser(req.session.auth.userId, function(data){
 			if(data!=="error")
 			{
-				  res.send(`<li class="right"><a href="/logout"><p class="bold animated bounceInRight">Logout</p></li>
-							<span class="right neontext whitetext">Logged in: ${data} </span>`);
+				  /*res.send(`<li class="right"><a href="/logout"><p class="bold animated bounceInRight">Logout</p></li>
+							<span class="right neontext whitetext">Logged in: ${data} </span>`); */
+					res.send(`
+							<div class="right dropdown">
+								<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">${data}
+								<span class="caret"></span></button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								 <a class= "dropdown-item" href="/logout">Logout</a>
+								</div>
+							 </div>`);
 			}	
 			else
 			{
@@ -226,6 +234,29 @@ app.get('/check-login', function(req, res){
    {
        res.send('<li class="right"><a href="/login.html"><p class="bold animated bounceInRight">Login/Register</p></li>');
    }
+});
+
+
+app.get('/template', function(req, res){
+	res.send(`<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+   <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </div>
+
+</body>`);
 });
 
 app.get('/logout', function(req, res){
@@ -305,14 +336,19 @@ function createTemplate(data){
 	<!doctype html>
 	<html>
 		<head>
+			<title>My WebApp</title>
+			<!-- FontAwesome CDN -->
+			<script src="https://use.fontawesome.com/70cfc12727.js"></script>
+			<!-- latest jQuery direct from google's CDN -->
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+			<!-- Bootstrap compiled and minified JS -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 			<!-- Bootstrap compiled and minified CSS -->
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
 			integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 			<link href="/ui/css/style.css" rel="stylesheet" />
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-			<!-- latest jQuery direct from google's CDN -->
-			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-			</script>
+			
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 		</head>
 		<body class="bgimg">

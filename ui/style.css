@@ -17,6 +17,10 @@ div.menu{
     text-align:center;
 }
 
+.center{
+	text-align:center;
+}
+
 .neontext {
 	text-shadow: 1px 1px 2px #00c5ff, 0 0 25px #004bff, 0 0 5px #000fff;
 }
@@ -109,9 +113,7 @@ div.navigation span li:nth-child(1){
 	color:#54ce3f;
 }
 
-#login span{
-	padding-right: 20px;
-}
+
 
 div.navigation li:not(:hover){
 	border-color: #272822;
@@ -248,4 +250,9 @@ div.navigation li.selected5{
 
 #Share{
 	list-style-type: none;
+}
+
+div.dropdown{
+	margin-right: 50px;
+	margin-top:10px;
 }

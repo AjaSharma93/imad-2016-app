@@ -2,7 +2,7 @@
 $("#submit_btn").click(function(){
     var user=$("#username").val();
     var pass=$("#password").val();
-            
+    $("#submit_btn").html('<i class="fa fa-circle-o-notch fa-spin fa-lg fa-fw"></i> Logging in');
     $.ajax({
         url: "/login",
         type: "POST",
@@ -10,11 +10,11 @@ $("#submit_btn").click(function(){
         data: JSON.stringify({username: user, password: pass}),
         contentType: "application/json",
         success: function(data){
-            alert(data.toString());
 			window.location.href="/";
         },
         error: function(xhr, status, errorThrown){
 			alert(xhr.responseText);
+			$("#submit_btn").html('Login');
         }
     });
    });

@@ -4,6 +4,7 @@ function(){
 	var user=$("#username").val();
 	var email=$("#email").val();
 	var pass=$("#password").val();
+	$("#submit_btn").html('<i class="fa fa-circle-o-notch fa-spin fa-lg fa-fw"></i> Please wait...');
 	$('#notifyuser').html('');
 	$('#notifyemail').html('');
 	$.ajax({
@@ -48,6 +49,7 @@ function(){
 				{
 				alert(xhr.responseText);
 				}
+				$("#submit_btn").html('Login');
 			}
 		});
 });

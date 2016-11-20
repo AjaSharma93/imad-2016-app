@@ -26,10 +26,6 @@ div.vertical-align ul li a:hover{
 	color: orange;
 }
 
-.center{
-	text-align:center;
-}
-
 .btn-primary.raised {
 	box-shadow: 0 3px 0 0 #007299;
 }
