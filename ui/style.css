@@ -326,4 +326,7 @@ div.dropdown{
 		margin-top: 100px;
 	}
 	
+	#Social ul, #Social li{
+		margin:4px;
+	}
 }
