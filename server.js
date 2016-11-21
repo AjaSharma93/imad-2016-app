@@ -12,7 +12,8 @@ var config={
 	port: '5432',
 	database: 'ajasharma93',
 	password: process.env.DB_PASSWORD
-}
+};
+
 var app = express();
 
 app.use(morgan('combined'));
@@ -124,7 +125,7 @@ app.post('/create-user', function(req, res)
 						{
 							res.status(403).send('email invalid');
 						}
-						else if(emailData==false){
+						else if(emailData===false){
 						res.status(403).send('email taken');
 						}
 						else{
@@ -138,7 +139,7 @@ app.post('/create-user', function(req, res)
 				{
 					res.status(403).send('username invalid');
 				}
-				else if(userData==false){
+				else if(userData===false){
 					res.status(403).send('username taken');
 				}
 				else{
@@ -237,28 +238,6 @@ app.get('/check-login', function(req, res){
 });
 
 
-app.get('/template', function(req, res){
-	res.send(`<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-   <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li><a href="/logout">Logout</a></li>
-    </ul>
-  </div>
-
-</body>`);
-});
-
 app.get('/logout', function(req, res){
    delete req.session.auth;
    res.sendFile(path.join(__dirname, 'ui', 'index.html'));
@@ -278,7 +257,7 @@ app.get('/comments-authenticate', function(req, res){
 						<label for="comment" class="sr-only">Comment:</label>
 						<textarea class="form-control" id="comment" placeholder="Your Comment" rows="3"></textarea>
 					</div>
-					<button type="submit"  class="btn btn-default" id="submit_btn">Submit</button>
+					<button type="submit"  class="btn btn-success" id="submit_btn">Submit</button>
 					<script type="text/javascript" src="/ui/js/comments.js">
 					</script>`;
 				res.send (comments);
