@@ -337,4 +337,8 @@ div.dropdown{
 	span.dropdown button{
 	    width:100%;
 	}
+	
+	span.dropdown p{
+	    width:100%;
+	}
 }
