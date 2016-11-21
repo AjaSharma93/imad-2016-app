@@ -10,7 +10,7 @@ $("#submit_btn").click(function(){
         data: JSON.stringify({username: user, password: pass}),
         contentType: "application/json",
         success: function(data){
-			window.location.href="/";
+			window.location.href="/articles";
         },
         error: function(xhr, status, errorThrown){
 			alert(xhr.responseText);
