@@ -3,6 +3,20 @@ html, body {
 	height:100%;
 }
 
+#menu-icon{
+	display: hidden;
+	height: 40px;
+	width: 40px;
+	background: url(/ui/images/menu-icon.png) center;
+}
+
+a:hover#menu-icon {
+
+	background-color: #444;
+	border-radius: 4px 4px 0 0;
+
+}
+
 .bgimg{
 		background-image: url(/ui/images/background.png);
 		background-repeat: repeat;
@@ -45,14 +59,7 @@ a:link{
 	text-decoration: none;
 }
 
-.resizeProfileImg{
-	margin-top:175px;
-	margin-left: 100px;
-	height:300px;
-	width:300px;
-	border-radius: 100%;
-	box-shadow: 1px 1px 2px red, 0 0 25px orange, 0 0 5px red, 0 0 50px yellow;
-}
+
 
 
 div.navigation {
@@ -119,6 +126,10 @@ div.navigation li:not(:hover){
 	border-color: #272822;
 }
 
+div.navigation span li:not(:hover){
+	border-color: #272822;
+}
+
 div.navigation li.selected1{
 	background: #dee22e;
 	color: #272822;
@@ -144,19 +155,24 @@ div.navigation li.selected5{
 	color: #272822;
 }
 
+.resizeProfileImg{
+	height:200px;
+	width:200px;
+	border-radius: 100%;
+	box-shadow: 1px 1px 2px red, 0 0 25px orange, 0 0 5px red, 0 0 50px yellow;
+	margin-bottom: 20px;
+}
+
 #wrapper{
-	margin-top:200px;
-	margin-right: 200px;
-	float:right;
+	margin-top:30px;
 	background: #000;
-	padding: 25px 15px 10px 60px;
+	padding: 25px 25px 25px 25px;
 	font-size:26;
 	color: #fff;
 	opacity:0.8;
-	width: 500px;
-	height:250px;
 	box-shadow: 0 0 5px red, 0 0 1px red, 0 0 25px orange;
 	border-radius:5px;
+	text-align: center;
 }
 
 
@@ -203,10 +219,6 @@ div.navigation li.selected5{
 	right:0;
 }
 
-#acknowledge
-{
-	float:right;
-}
 
 .scroll-pane
 {
@@ -232,7 +244,7 @@ div.navigation li.selected5{
 
 #Social{
 	right:0;
-	top: 150px;
+	top: 75px;
 	position:fixed;
 	border: 2px solid #795032;
 	border-width: 2px 0px 2px 2px;
@@ -259,4 +271,59 @@ div.dropdown{
 
 .dropdown-menu {
   min-width: 100px;
+}
+
+.vertical-align {
+   
+    display: flex;
+    align-items: center;
+	min-height: 100%;  /* Fallback for vh unit */
+	min-height: 100vh;
+	justify-content : center;
+	margin-bottom:0;
+}
+
+@media only screen and (max-width : 640px) {
+	
+	nav ul, nav:active ul { 
+
+		display: none;
+		position: absolute;
+		padding: 20px;
+		border: 2px solid #26d9e8;
+		background: #272822;
+		left: 20px;
+		top: 60px;
+		width: 50%;
+		border-radius: 4px 0 4px 4px;
+
+	}
+	
+	#menu-icon{
+		display:inline-block;
+	}
+
+	nav li {
+
+		text-align: center;
+		width: 100%;
+		padding: 10px 0;
+		margin: 0;
+
+	}
+	
+	nav span#login li{
+		float: left;
+	}
+
+	nav:hover ul {
+
+		display: block;
+
+	}
+	
+	#wrapper{
+		margin-top: 100px;
+	}
+	
 }

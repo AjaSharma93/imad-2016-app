@@ -299,16 +299,18 @@ app.get('/comments-authenticate', function(req, res){
 var about={
 	selected2: 'selected2',
 	content:`
-	<div class="inline">
-		<img class="resizeProfileImg" src="/ui/images/me.jpg" alt="My Profile">
-		<div id="wrapper">
-			<p>Name: Aja Sharma</p>
-			<p>From Bangalore, Karnataka</p>
-			<p>Graduated in B.E(E.C.E) in 2016<p>
-			<p>Android and Java developer</p>
-			<p>Interests: Coding, Football, Music, Gaming</p>
-			<p>Thrilled to work with IMAD</p>
-		</div>
+	<div class="vertical-align">
+		<ul>
+		    <div id="wrapper">
+				<img class="resizeProfileImg" src="/ui/images/me.jpg" alt="My Profile">
+				<p>Name: Aja Sharma</p>
+				<p>From Bangalore, Karnataka</p>
+				<p>Graduated in B.E(E.C.E) in 2016<p>
+				<p>Love to learn new stuff.</p>
+				<p>Interests: Coding, Football, Music, Gaming</p>
+				<p>Thrilled to work with IMAD</p>
+			</div>
+		</ul>
 	</div>`
 };
 
@@ -352,30 +354,35 @@ function createTemplate(data){
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 		</head>
 		<body class="bgimg">
-			<div class="navigation menu">
-				<ul>
-					<li class="${selected1} left"><a href="/"><p class="bold animated bounceInLeft">Home</p></a></li>
-					<li class="${selected2} left"><a href="/about"><p class="bold animated bounceInLeft">About Me</p></a></li>
-					<li class="${selected3} left"><a href="/contact"><p class="bold animated bounceInLeft">Contact</p></a></li>
-					<li class="${selected4} left"><a href="/articles"><p class="bold animated bounceInLeft">Articles</p></a></li>
-					<span id="login"></span>
-				</ul>
+			<nav>
+				<div class="navigation menu">
+					<a href="#" id="menu-icon"></a>
+					<ul>
+						<li class="${selected1} left"><a href="/"><p class="bold animated bounceInLeft">Home</p></a></li>
+						<li class="${selected2} left"><a href="/about"><p class="bold animated bounceInLeft">About Me</p></a></li>
+						<li class="${selected3} left"><a href="/contact"><p class="bold animated bounceInLeft">Contact</p></a></li>
+						<li class="${selected4} left"><a href="/articles"><p class="bold animated bounceInLeft">Articles</p></a></li>
+						<span id="login"></span>
+					</ul>
+				</div>
+			</nav>
+			<div class="container-fluid">
+				${content}
+				<div id="Social">
+					<ul>
+						<li id="Share" class="bold whitetext">Follow:</li>
+						<li id="Share">
+							<a href="https://twitter.com/ajasharma1101" target="_blank" style="text-decoration:none;">
+							<img src="https://g.twimg.com/dev/documentation/image/Twitter_logo_blue_32.png" alt="Twitter" style="border:0;width:32px;height:32px"></a>
+						</li>
+						<li id="Share">
+							<a href="//plus.google.com/u/0/106415896484965862024?prsrc=3"rel="publisher" target="_blank" style="text-decoration:none;">
+							<img src="//ssl.gstatic.com/images/icons/gplus-32.png" alt="Google+" style="border:0;width:32px;height:32px;"/>
+							</a>
+						</li>
+					</ul>
+				</div>
 			</div>
-			${content}
-			<div id="Social">
-				<ul>
-					<li id="Share" class="bold whitetext">Follow:</li>
-					<li id="Share">
-						<a href="https://twitter.com/ajasharma1101" target="_blank" style="text-decoration:none;">
-						<img src="https://g.twimg.com/dev/documentation/image/Twitter_logo_blue_32.png" alt="Twitter" style="border:0;width:32px;height:32px"></a>
-					</li>
-					<li id="Share">
-						<a href="//plus.google.com/u/0/106415896484965862024?prsrc=3"rel="publisher" target="_blank" style="text-decoration:none;">
-						<img src="//ssl.gstatic.com/images/icons/gplus-32.png" alt="Google+" style="border:0;width:32px;height:32px;"/>
-						</a>
-					</li>
-				</ul>
-		</div>
 		<script src="/ui/js/authentication.js"></script>
 		</body>
 	</html>	`;
