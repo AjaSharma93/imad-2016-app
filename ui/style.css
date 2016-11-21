@@ -333,4 +333,8 @@ div.dropdown{
 	span.dropdown{
 	    width:100%;
 	}
+	
+	span.dropdown button{
+	    left:50%;
+	}
 }
