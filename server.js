@@ -217,13 +217,13 @@ app.get('/check-login', function(req, res){
 				  /*res.send(`<li class="right"><a href="/logout"><p class="bold animated bounceInRight">Logout</p></li>
 							<span class="right neontext whitetext">Logged in: ${data} </span>`); */
 					res.send(`
-							<div class="right dropdown">
+							<span class="right dropdown">
 								<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">${data}
 								<span class="caret"></span></button>
 								<p class="center dropdown-menu" aria-labelledby="dropdownMenuButton">
 								 <a class= "dropdown-item" href="/logout">Logout</a>
 								</p>
-							 </div>`);
+							 </span>`);
 			}	
 			else
 			{
