@@ -49,7 +49,7 @@ function(){
 				{
 				alert(xhr.responseText);
 				}
-				$("#submit_btn").html('Login');
+				$("#submit_btn").html('Register');
 			}
 		});
 });
