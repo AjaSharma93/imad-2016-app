@@ -329,4 +329,8 @@ div.dropdown{
 	#Social ul, #Social li{
 		margin:4px;
 	}
+	
+	div.dropdown{
+	float: left;
+	}
 }
