@@ -312,7 +312,7 @@ div.dropdown{
 
 	}
 	
-	nav span#login li{
+	nav #login li{
 		float: left;
 	}
 
@@ -331,6 +331,7 @@ div.dropdown{
 	}
 	
 	div.dropdown{
-	float: left;
+	    display: inline-block;
+	    text-align: center;
 	}
 }
