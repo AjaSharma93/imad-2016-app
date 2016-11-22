@@ -12,7 +12,7 @@ $("#submit_btn").click(function(){
 	$.get(articlepath+"/commentry?comment="+comment,
 		function(data, status){
 			alert(data);
-			commentInput.text('');
+			commentInput.val('');
     });
 }
 );
