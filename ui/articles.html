@@ -25,14 +25,15 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 		<link href="/ui/css/style.css" rel="stylesheet" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<script type="text/javascript">
+		<script>
 			$(function(){
 				$("#navbar").load("/navbar.html", function(){
-					$("ul li:nth-child(4)").addClass("selected4");
+					$("ul li:nth-child(1)").addClass("selected1");
 					$.get('/check-login',function(data, status){
 					$('#login').html(data.toString());
 					});
 				});
+			});
 		</script>
     </head>
     <body class="bgimg">
