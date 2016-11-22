@@ -25,19 +25,23 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 		<link href="/ui/css/style.css" rel="stylesheet" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script>
+			$(function(){
+				$("#navbar").load("/navbar.html", function(){
+					$("ul li:nth-child(4)").addClass("selected4");
+					$.get('/check-login',function(data, status){
+					$('#login').html(data.toString());
+					});
+				});
+			});
+		</script>
     </head>
     <body class="bgimg">
 		
 		<nav>
 		    <div class="navigation menu" id="navbar">
 		    	 </div>
-			<script type="text/javascript">
-			$(function(){
-				$("#navbar").load("/navbar.html", function(){
-					$("ul li:nth-child(4)").addClass("selected4");
-					});
-				});
-			</script>
+			
 		</nav>
 		<div class="container-fluid">
 			<div class="articles">
