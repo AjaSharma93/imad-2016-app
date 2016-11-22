@@ -7,11 +7,10 @@ var bodyParser=require('body-parser');
 var session=require('express-session');
 
 var config={
-	user: 'ajasharma93',
-	host: 'db.imad.hasura-app.io',
-	port: '5432',
-	database: 'ajasharma93',
-	password: process.env.DB_PASSWORD
+	user: 'postgres',
+	host: 'localhost',
+	database: 'postgres',
+	password: 'dextermorgan'
 };
 
 var app = express();
@@ -233,7 +232,7 @@ app.get('/check-login', function(req, res){
    }
    else
    {
-       res.send('<li class="right"><a href="/login.html"><p class="bold animated bounceInRight">Login/Register</p></li>');
+       res.send('<li class="right"><a href="/login.html"><p class="bold animated">Login/Register</p></li>');
    }
 });
 
@@ -308,10 +307,12 @@ var contact={
 
 //template for creating the webpages of home, about, contact tabs
 function createTemplate(data){
-	var selected1=data.selected1;
 	var selected2=data.selected2;
 	var selected3=data.selected3;
-	var selected4=data.selected4;
+	var num=2;
+	if(selected3!==undefined){
+		num=3;
+	};
 	var content=data.content;
 	var htmlTemplate=`
 	<!doctype html>
@@ -329,21 +330,22 @@ function createTemplate(data){
 			integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 			<link href="/ui/css/style.css" rel="stylesheet" />
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-			
+			<script>
+			$(function(){
+				$("#navbar").load("/navbar.html", function(){
+					$("ul li:nth-child(${num})").addClass("${selected2} ${selected3}");
+					$.get('/check-login',function(data, status){
+					$('#login').html(data.toString());
+					});
+				});
+			});
+			</script>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 		</head>
 		<body class="bgimg">
 			<nav>
-				<div class="navigation menu">
-					<a href="#" id="menu-icon"></a>
-					<ul>
-						<li class="${selected1} left"><a href="/"><p class="bold animated bounceInLeft">Home</p></a></li>
-						<li class="${selected2} left"><a href="/about"><p class="bold animated bounceInLeft">About Me</p></a></li>
-						<li class="${selected3} left"><a href="/contact"><p class="bold animated bounceInLeft">Contact</p></a></li>
-						<li class="${selected4} left"><a href="/articles"><p class="bold animated bounceInLeft">Articles</p></a></li>
-						<span id="login"></span>
-					</ul>
-				</div>
+			    <div class="navigation menu" id="navbar">
+		    	 </div>
 			</nav>
 			<div class="container-fluid">
 				${content}
@@ -362,7 +364,6 @@ function createTemplate(data){
 					</ul>
 				</div>
 			</div>
-		<script src="/ui/js/authentication.js"></script>
 		</body>
 	</html>	`;
 	return htmlTemplate;
@@ -411,6 +412,11 @@ app.get('/register.html', function(req, res){
 	{
 	res.sendFile(path.join(__dirname,'ui','register.html')); //register page
 	}
+});
+
+app.get('/navbar.html', function(req, res)
+{
+	res.sendFile(path.join(__dirname,'ui', 'navbar.html'));
 });
 
 
@@ -471,10 +477,12 @@ function articleTemplate(data, commentData)
 	var commentList='';
 	for(var i=0; i<commentData.length; i++)
 	{
+		safe_tags(commentData[i].comment, function(data){
 		commentList+=`<p class="italics">${commentData[i].comment_author}
 					  posted on ${commentData[i].comment_date.toDateString()} 
 					  ${commentData[i].comment_date.toLocaleTimeString()}</p>
-					  <p>${commentData[i].comment}</p><hr/>`;
+					  <p>${data}</p><hr/>`;
+		});
 	}
 	var template=`
 	<!doctype html>
@@ -500,6 +508,9 @@ function articleTemplate(data, commentData)
 	
 }
 
+function safe_tags(str, callback) { //tag replacement of comments
+    callback(str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')) ;
+}
 
 app.get('/articles/:articleName', function(req, res){
 	var articleName=req.params.articleName; //article name obtained for GET request.

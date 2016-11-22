@@ -14,20 +14,21 @@
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	
+	<script>
+		$(function(){
+			$("#navbar").load("/navbar.html", function(){
+				$.get('/check-login',function(data, status){
+				$('#login').html(data.toString());
+				$("ul span li:nth-child(1)").addClass("selected5");
+				});
+			});
+		});
+	</script>
   </head>
   <body class="bgimg">
 		<nav>
-			<div class="navigation menu">
-				<a href="#" id="menu-icon"></a>
-				<ul>
-					<li class="left"><a href="/"><p class="bold animated bounceInLeft">Home</p></a></li>
-					<li class="left"><a href="/about"><p class="bold animated bounceInLeft">About Me</p></a></li>
-					<li class="left"><a href="/contact"><p class="bold animated bounceInLeft">Contact</p></a></li>
-					<li class="left"><a href="/articles"><p class="bold animated bounceInLeft">Articles</p></a></li>
-					<span id="login"></span>
-				</ul>
-			</div>
+		    <div class="navigation menu" id="navbar">
+		    	 </div>
 		</nav>
 		 <div class="container-fluid">
 			<div class="vertical-align">
@@ -70,6 +71,5 @@
 			</div>
 			<script type="text/javascript" src="/ui/js/register.js"></script>
 		</div>
-		<script src="/ui/js/authentication.js"></script>
 	  </body>
 </html>
