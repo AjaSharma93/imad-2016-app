@@ -533,7 +533,7 @@ function articleTemplate(data, commentData)
 					<img src="${imgsrc}" alt="${articleHeading}"  class="img-responsive center-block" width="60%"/>
 					<hr/>
 					<p class="bold">Author:${author_name}</p>
-					<p>${publishDate.toDateString()}</p><br/>
+					<p>${publishDate.toDateString()}</p><hr/>
 					<p>${articleContent}</p>
 					<h3>Comments:</h3><hr/>
 					${commentList}
