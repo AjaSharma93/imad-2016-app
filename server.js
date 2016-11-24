@@ -504,8 +504,8 @@ function articleTemplate(data, commentData)
 	{
 		safe_tags(commentData[i].comment, function(data){
 		commentList+=`<p><span class="bold">${commentData[i].comment_author}</span>
-					  posted on <span class="italic">${commentData[i].comment_date.toDateString()} </span>
-					  ${commentData[i].comment_date.toLocaleTimeString()}</p>
+					  posted on <span class="italic">${commentData[i].comment_date.toDateString()} 
+					  ${commentData[i].comment_date.toLocaleTimeString()}</span></p>
 					  <p>${data}</p><hr/>`;
 		});
 	}
