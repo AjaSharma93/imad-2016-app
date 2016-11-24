@@ -6,6 +6,10 @@ html, body {
 	padding-top:100px;
 }
 
+.padding-50px-top{
+	padding-top:100px;
+}
+
 .container-fluid{
     padding-bottom: 50px;
 }
