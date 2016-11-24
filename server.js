@@ -528,7 +528,7 @@ function articleTemplate(data, commentData)
 			</head>
 			<body>
 				<div class="padding-30px-top container-fluid">
-					<button id="back" class="left btn btn-default"><i class=" glyphicon glyphicon-chevron-left"></i>Go back</button>
+					<button id="back" class="btn btn-default"><i class=" glyphicon glyphicon-chevron-left"></i>Go back</button>
 					<h1 class="center">${articleHeading}</h1>
 					<hr/>
 					<img src="${imgsrc}" alt="${articleHeading}"  class="img-responsive center-block" width="60%"/>
