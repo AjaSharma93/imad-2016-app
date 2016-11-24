@@ -1,7 +1,11 @@
 html, body {
     font-family: Georgia, serif;
-	height:100%;
 }
+
+.padding-100px-top{
+	padding-top:100px;
+}
+
 
 #menu-icon{
 	display: hidden;
@@ -26,10 +30,6 @@ div.menu{
 	position: fixed;
 }
 
-.centeredtext {
-	margin-top:200px;
-    text-align:center;
-}
 
 .center{
 	text-align:center;
@@ -206,41 +206,6 @@ div.navigation span li.selected5{
 	border-radius:5px;
 }
 
-.comments
-{
-	width:50%;
-	padding:5px;
-}
-
-.footer
-{
-	position:fixed;
-	bottom:0;
-	right:0;
-}
-
-
-.scroll-pane
-{
-	width: 20%;
-	height: 400px;
-	overflow: auto;
-	float:left;
-	margin-right: 10px;
-	background: white;
-	border: none;
-	border-radius:5px;
-}
-
-#imad
-{
-	width:40%;
-	height:40%;
-}
-
-.clicked {
-    border-bottom: 1px solid red;
-}
 
 #Social{
 	right:0;
@@ -281,6 +246,10 @@ div.dropdown{
 	min-height: 100vh;
 	justify-content : center;
 	margin-bottom:0;
+}
+
+#commentbox{
+	margin-bottom: 100px;
 }
 
 @media only screen and (max-width : 640px) {
@@ -336,3 +305,5 @@ div.dropdown{
 	}
 	
 }
+
+

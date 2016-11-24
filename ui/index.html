@@ -12,6 +12,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link href="/ui/css/style.css" rel="stylesheet" />
+		<link href="/ui/css/footer.css" rel="stylesheet" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<script>
@@ -30,14 +31,20 @@
 		    	<div class="navigation menu" id="navbar">
 		    	 </div>
 		</nav>
-		<div class="container-fluid">
-			<div class="centeredtext text-big whitetext neontext">
-				Hi. Welcome to my webapp.
+		<div class="container-fluid padding-100px-top">
+			<div class="center text-big whitetext neontext">
+				Hi. Welcome to my blog.
 			</div>
-			<div class="footer">
-				<h4 class="whitetext neontext bold">Powered by 
-				<img id="imad" src="/ui/images/imad.png"></img></h4>
-			</div>
+			<h4 class="neontext whitetext"> Recent changes:</h4>
+			<ul class="neontext whitetext">
+			<h5>24/11/2016</h5>
+			<li>More Mobile-Friendly.</li>
+			<li>Changed the view of the Articles page using Bootstrap(Work in progress).</li>
+			<li>Used client and server side scripting to remove redundant code(Work in progress).</li>
+			<li>Sanitized the inputs on the server end to prevent SQL and XSS attacks.</li>
+			<li>Changed the footer</li>
+			</ul>
+			
 			<div id="Social">
 					<ul>
 						<li id="Share" class="bold whitetext">Follow:</li>
@@ -53,5 +60,14 @@
 					</ul>
 			</div>
 		</div>
+		<footer>
+        </footer>
+		<script>
+			  $(document).ready(function(){
+				  $.get('/footer.html', function(data, status){
+					$("footer").html(data);
+				  });
+			  });
+		</script>
     </body>
 </html>

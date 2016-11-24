@@ -23,7 +23,10 @@
 		
 		<!-- Animate.css for text animations -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+		
+		<link href="/ui/css/footer.css" rel="stylesheet" />
 		<link href="/ui/css/style.css" rel="stylesheet" />
+		<link href="/ui/css/articles.css" rel="stylesheet" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<script>
 			$(function(){
@@ -37,29 +40,42 @@
 		</script>
     </head>
     <body class="bgimg">
-		
-		<nav>
-		    <div class="navigation menu" id="navbar">
-		    	 </div>
-			
-		</nav>
 		<div class="container-fluid">
-			<div class="articles">
-				<div class="scroll-pane">
-					<ol id="article_list">
-						<br/>
-						<li><a href="/articles/Article-One" target="news" class="clicked">Article 1</a></li>
-						<li><a href="/articles/Article-Two" target="news">Article 2</a></li>
-						<li><a href="/articles/Article-Three" target="news">Article 3</a></li>
-						<li><a href="/articles/Article-Four" target="news">Article 4</a></li>
-					</ol>
+			<nav>
+				<div class="navigation menu" id="navbar">
+					 </div>
+				
+			</nav>
+			<div id="articleslist">
+				<!--<div class="articles">
+					<div class="scroll-pane">
+						<ol id="article_list">
+							<br/>
+							<li><a href="/articles/Article-One" target="news" class="clicked">Article 1</a></li>
+							<li><a href="/articles/Article-Two" target="news">Article 2</a></li>
+							<li><a href="/articles/Article-Three" target="news">Article 3</a></li>
+							<li><a href="/articles/Article-Four" target="news">Article 4</a></li>
+						</ol>
+					</div>
+					<div><iframe src="/articles/Article-One" id="articleWindow" class="displaynews" name="news"></iframe></div>
 				</div>
-				<div><iframe src="/articles/Article-One" id="articleWindow" class="displaynews" name="news"></iframe></div>
+				<div class="comments">
+				</div>
+				<script src="/ui/js/comments_authenticate.js"></script>
+				<script src="/ui/js/comments.js"></script>
+			</div>-->
 			</div>
-			<div class="comments">
-			</div>
-			<script src="/ui/js/comments_authenticate.js"></script>
-			<script src="/ui/js/comments.js"></script>
 		</div>
+		<script src="/ui/js/articlefetcher.js"></script>
+		
+		<footer>
+        </footer>
+		<script>
+			  $(document).ready(function(){
+				  $.get('/footer.html', function(data, status){
+					$("footer").html(data);
+				  });
+			  });
+		</script>
     </body>
 </html>

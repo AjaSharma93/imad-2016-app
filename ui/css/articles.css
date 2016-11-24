@@ -1,8 +1,8 @@
 body{
-	font-family: Georgia, serif;
+	padding-top: 100px;
 }
 
-.center{
+/*.center{
 	text-align:center;
 }
 	
@@ -12,4 +12,26 @@ body{
 
 .italics{
 	font-style: italic;
+} */
+
+
+.panel > .panel-heading {
+    background-image: none;
+    background-color: #88276b;
+    color: white;
+	text-align: center;
+}
+
+.panel > .panel-content {
+    background-image: none;
+    background-color: #fff;
+    color: black;
+
+}
+
+.panel > .panel-footer {
+    background-image: none;
+    background-color: #000;
+    color: white;
+
 }

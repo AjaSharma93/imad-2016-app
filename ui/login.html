@@ -3,6 +3,7 @@
 	<title>Login</title>
 	<link href="/ui/css/login_register.css" rel="stylesheet"/>
 	<link href="/ui/css/style.css" rel="stylesheet" />
+	<link href="/ui/css/footer.css" rel="stylesheet" />
 	<!-- FontAwesome CDN -->
 	<script src="https://use.fontawesome.com/70cfc12727.js"></script>
 	<!-- latest jQuery direct from google's CDN -->
@@ -68,5 +69,15 @@
 			</div>
 			<script type="text/javascript" src="/ui/js/login.js"></script>
 		</div>
+		
+		<footer>
+        </footer>
+		<script>
+			  $(document).ready(function(){
+				  $.get('/footer.html', function(data, status){
+					$("footer").html(data);
+				  });
+			  });
+		</script>
 	  </body>
 </html>

@@ -24,6 +24,7 @@ app.use(session({
 }));
 
 var pool = new Pool(config); //declaring a connection pool for database queries;
+require('./ui/nest/articles.js')(app, pool);
 
 function hash(pass, salt)
 {
@@ -218,7 +219,9 @@ app.get('/check-login', function(req, res){
 							<span class="right neontext whitetext">Logged in: ${data} </span>`); */
 					res.send(`
 							<span class="right dropdown">
-								<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">${data}
+								<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-user"></span>
+								${data}
 								<span class="caret"></span></button>
 								<p class="center dropdown-menu" aria-labelledby="dropdownMenuButton">
 								 <a class= "dropdown-item" href="/logout">Logout</a>
@@ -251,8 +254,8 @@ app.get('/comments-authenticate', function(req, res){
 				if(user !== "error")
 				{
 				var comments= `
-				<h3 class="whitetext">Add a comment:</h3>
-					<p class="whitetext">You are logged in as ${user}</p>
+					<h4>Add a comment:</h4>
+					<p>You are logged in as ${user}</p>
 					<div class="form-group">
 						<label for="comment" class="sr-only">Comment:</label>
 						<textarea class="form-control" id="comment" placeholder="Your Comment" rows="3"></textarea>
@@ -263,13 +266,13 @@ app.get('/comments-authenticate', function(req, res){
 				res.send (comments);
 				}
 				else{
-					res.send('Error occurred');
+					res.send('error occurred');
 				}
 			});
    }
    else
    {
-       res.send('<h3 class="whitetext">Login to post comments</h3>');
+       res.send('<h3>Login to post comments</h3>');
    }
 });
 
@@ -287,7 +290,7 @@ var about={
 				<p>Graduated in B.E(E.C.E) in 2016<p>
 				<p>Love to learn new stuff.</p>
 				<p>Interests: Coding, Football, Music, Gaming</p>
-				<p>Thrilled to work with IMAD</p>
+				<p>Getting a hang of web development with IMAD</p>
 			</div>
 		</ul>
 	</div>`
@@ -297,7 +300,7 @@ var about={
 var contact={
 	selected3: 'selected3',
 	content:`
-	<div class="centeredtext text-big whitetext neontext">
+	<div class="padding-100px-top center text-big whitetext neontext">
 		<p>
 			<p>Email: aja.sharma1101@gmail.com</p>
 			<p>GitHub: www.github.com/AjaSharma93</p>
@@ -331,6 +334,7 @@ function createTemplate(data){
 			integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 			<link href="/ui/css/style.css" rel="stylesheet" />
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+			<link href="/ui/css/footer.css" rel="stylesheet" />
 			<script>
 			$(function(){
 				$("#navbar").load("/navbar.html", function(){
@@ -365,7 +369,17 @@ function createTemplate(data){
 					</ul>
 				</div>
 			</div>
-		</body>
+			
+			<footer>
+			</footer>
+			<script>
+				  $(document).ready(function(){
+					  $.get('/footer.html', function(data, status){
+						$("footer").html(data);
+					  });
+				  });
+			</script>
+			</body>
 	</html>	`;
 	return htmlTemplate;
 }
@@ -418,6 +432,11 @@ app.get('/register.html', function(req, res){
 app.get('/navbar.html', function(req, res)
 {
 	res.sendFile(path.join(__dirname,'ui', 'navbar.html'));
+});
+
+app.get('/footer.html', function(req, res)
+{
+	res.sendFile(path.join(__dirname,'ui', 'footer.html'));
 });
 
 
@@ -476,6 +495,12 @@ function articleTemplate(data, commentData)
 	var articleContent=data.article_content;
 	var publishDate=data.publish_date;
 	var commentList='';
+	var imgsrc='';
+	var author_name=data.author_name;
+	if(data.article_image)
+	{
+		imgsrc=data.article_image;
+	}
 	for(var i=0; i<commentData.length; i++)
 	{
 		safe_tags(commentData[i].comment, function(data){
@@ -485,29 +510,57 @@ function articleTemplate(data, commentData)
 					  <p>${data}</p><hr/>`;
 		});
 	}
+
 	var template=`
 	<!doctype html>
 		<html>
 			<head>
 				<title>${articleTitle}</title>
-				<link href="/ui/css/articles.css" rel="stylesheet" />
+				
+				<!-- latest jQuery direct from google's CDN -->
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+				<!-- Bootstrap compiled and minified CSS -->
+				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+				<!-- Bootstrap compiled and minified JS -->
+				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+				<link href="/ui/css/style.css" rel="stylesheet" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			</head>
 			<body>
-				<div class="container">
-					<h1 class="center">${articleHeading}</h1>
+				<div class="container-fluid">
+					<h1 class="center">
+					<button id="back" class="left btn btn-default"><i class=" glyphicon glyphicon-chevron-left"></i>Go back</button>
+					${articleHeading}</h1>
 					<hr/>
+					<img src="${imgsrc}" alt="${articleHeading}"  class="img-responsive center-block" width="60%"/>
+					<hr/>
+					<p class="bold">Author:${author_name}</p>
 					<p>${publishDate.toDateString()}</p>
 					<p>${articleContent}</p>
 					<h3>Comments:</h3><hr/>
 					${commentList}
+					<div id="commentbox">
+					</div>
 				</div>
+				<script>
+				$(document).ready(function()
+					{
+						$.get('/comments-authenticate', function(data, status){
+							$("#commentbox").html(data);
+						});
+					});
+				$("#back").click(function()
+				{
+					window.location.href="/articles";
+				});
+				</script>
 			</body>
 		</html>`;
-		
 		return template;
-	
 }
+
+
+
 
 function safe_tags(str, callback) { //tag replacement of comments
     callback(str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')) ;
@@ -515,7 +568,7 @@ function safe_tags(str, callback) { //tag replacement of comments
 
 app.get('/articles/:articleName', function(req, res){
 	var articleName=req.params.articleName; //article name obtained for GET request.
-	pool.query('SELECT * FROM "Articles" where article_title= $1', [articleName], 
+	pool.query('SELECT * FROM "Articles" a, "Authors" b where article_title= $1 and a.author_id=b.author_id', [articleName], 
 	function(err, result)
 	{
 		if(err)
@@ -558,7 +611,7 @@ app.get('/articles/:articleName', function(req, res){
 		}
 	});
 	
-});
+}); 
 
 
 
