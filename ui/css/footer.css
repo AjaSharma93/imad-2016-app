@@ -13,3 +13,9 @@ footer {
                 text-shadow: none;
                 color: #fff;
             } 
+            
+@media only screen and (max-width : 640px) {
+    footer{
+        margin-bottom: -100px;
+    }   
+}
