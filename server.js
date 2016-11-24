@@ -300,10 +300,10 @@ var about={
 var contact={
 	selected3: 'selected3',
 	content:`
-	<div class="padding-100px-top center text-big whitetext neontext">
+	<div class="padding-100px-top center whitetext neontext">
 		<p>
-			<p>Email: aja.sharma1101@gmail.com</p>
-			<p>GitHub: www.github.com/AjaSharma93</p>
+			<h2>Email: aja.sharma1101@gmail.com</h2>
+			<h2>GitHub: www.github.com/AjaSharma93</h2>
 		</p>
 	</div>`
 };
