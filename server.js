@@ -272,7 +272,7 @@ app.get('/comments-authenticate', function(req, res){
    }
    else
    {
-       res.send('<h3>Login to post comments</h3>');
+       res.send('<h3>Login to post comments</h3><a href="/login.html">Login/Register</a>');
    }
 });
 
