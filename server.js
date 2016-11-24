@@ -8,7 +8,7 @@ var session=require('express-session');
 
 var config={
 	user: 'ajasharma93',
-	host: 'db.imad.hasura-app.io',
+	host: 'localhost',
 	port:'5432',
 	database: 'ajasharma93',
 	password: process.env.DB_PASSWORD
@@ -300,11 +300,24 @@ var about={
 var contact={
 	selected3: 'selected3',
 	content:`
-	<div class="padding-100px-top center whitetext neontext">
+	<div class="padding-100px-top padding-100px-bottom center whitetext">
 		<p>
 			<h2>Email: aja.sharma1101@gmail.com</h2>
 			<h2>GitHub: www.github.com/AjaSharma93</h2>
 		</p>
+		<br/>
+		<span id="Social">
+			<span id="Share" class="bold whitetext">Follow:</span>
+			<span id="Share">
+				<a href="https://twitter.com/ajasharma1101" target="_blank" style="text-decoration:none;">
+				<img src="https://g.twimg.com/dev/documentation/image/Twitter_logo_blue_32.png" alt="Twitter" style="border:0;width:32px;height:32px"></a>
+			</span>
+			<span id="Share">
+				<a href="//plus.google.com/u/0/106415896484965862024?prsrc=3"rel="publisher" target="_blank" style="text-decoration:none;">
+				<img src="//ssl.gstatic.com/images/icons/gplus-32.png" alt="Google+" style="border:0;width:32px;height:32px;"/>
+				</a>
+			</span>
+		</span>
 	</div>`
 };
 
@@ -352,22 +365,8 @@ function createTemplate(data){
 			    <div class="navigation menu" id="navbar">
 		    	 </div>
 			</nav>
-			<div class="container-fluid">
+			<div class="container">
 				${content}
-				<div id="Social">
-					<ul>
-						<li id="Share" class="bold whitetext">Follow:</li>
-						<li id="Share">
-							<a href="https://twitter.com/ajasharma1101" target="_blank" style="text-decoration:none;">
-							<img src="https://g.twimg.com/dev/documentation/image/Twitter_logo_blue_32.png" alt="Twitter" style="border:0;width:32px;height:32px"></a>
-						</li>
-						<li id="Share">
-							<a href="//plus.google.com/u/0/106415896484965862024?prsrc=3"rel="publisher" target="_blank" style="text-decoration:none;">
-							<img src="//ssl.gstatic.com/images/icons/gplus-32.png" alt="Google+" style="border:0;width:32px;height:32px;"/>
-							</a>
-						</li>
-					</ul>
-				</div>
 			</div>
 			
 			<footer>
