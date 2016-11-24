@@ -8,7 +8,7 @@ var session=require('express-session');
 
 var config={
 	user: 'ajasharma93',
-	host: 'localhost',
+	host: 'db.imad.hasura-app.io',
 	port:'5432',
 	database: 'ajasharma93',
 	password: process.env.DB_PASSWORD
