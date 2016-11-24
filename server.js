@@ -527,7 +527,7 @@ function articleTemplate(data, commentData)
 				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			</head>
 			<body>
-				<div class="padding-50px-top container-fluid">
+				<div class="padding-30px-top container-fluid">
 					<button id="back" class="left btn btn-default"><i class=" glyphicon glyphicon-chevron-left"></i>Go back</button>
 					<h1 class="center">${articleHeading}</h1>
 					<hr/>
