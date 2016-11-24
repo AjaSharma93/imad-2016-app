@@ -59,6 +59,10 @@ div.menu{
     font-weight: bold;
 }
 
+.italic{
+    font-style: italic;
+}
+
 .whitetext{
 	color: white;
 }
