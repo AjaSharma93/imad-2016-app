@@ -302,8 +302,8 @@ var contact={
 	content:`
 	<div class="padding-100px-top padding-100px-bottom center whitetext">
 		<p>
-			<h2>Email: aja.sharma1101@gmail.com</h2>
-			<h2>GitHub: www.github.com/AjaSharma93</h2>
+			<h4>Email: aja.sharma1101@gmail.com</h4>
+			<h4>GitHub: www.github.com/AjaSharma93</h4>
 		</p>
 		<br/>
 		<span id="Social">
@@ -318,7 +318,12 @@ var contact={
 				</a>
 			</span>
 		</span>
-	</div>`
+	</div>
+	<script>
+              (function (w,i,d,g,e,t,s) {w[d] = w[d]||[];t= i.createElement(g);
+                t.async=1;t.src=e;s=i.getElementsByTagName(g)[0];s.parentNode.insertBefore(t, s);
+              })(window, document, '_gscq','script','//widgets.getsitecontrol.com/61950/script.js');
+     </script>`
 };
 
 
@@ -365,7 +370,7 @@ function createTemplate(data){
 			    <div class="navigation menu" id="navbar">
 		    	 </div>
 			</nav>
-			<div class="container">
+			<div class="container-fluid">
 				${content}
 			</div>
 			
@@ -378,11 +383,6 @@ function createTemplate(data){
 					  });
 				  });
 			</script>
-			<script>
-              (function (w,i,d,g,e,t,s) {w[d] = w[d]||[];t= i.createElement(g);
-                t.async=1;t.src=e;s=i.getElementsByTagName(g)[0];s.parentNode.insertBefore(t, s);
-              })(window, document, '_gscq','script','//widgets.getsitecontrol.com/61950/script.js');
-            </script>
 			</body>
 	</html>	`;
 	return htmlTemplate;
