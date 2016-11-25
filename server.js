@@ -97,7 +97,7 @@ app.post('/create-user', function(req, res)
     var password=req.body.password;
     var salt= crypto.randomBytes(128).toString('hex');
     var dbString= hash(password, salt);
-	if(username!=='' && password!=='' && email!=='')
+	if(username.trim()!=='' && password.trim()!=='' && email.trim()!=='')
 	{
 		checkUsername(username, function(userData){
 			console.log(userData);
