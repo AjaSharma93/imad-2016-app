@@ -4,6 +4,7 @@ This script sends the comments to the server and receives the response
 $("#submit_btn").click(function(){
 	var commentInput=$("#comment");
 	var comment=commentInput.val();
+	comment = comment.replace(/\r?\n/g, "<br />");
 	var articlepath=window.location.pathname || document.location.pathname;
 	
 	
