@@ -26,7 +26,7 @@ body{
     background-image: none;
     background-color: #fff;
     color: black;
-
+	padding: 10px;
 }
 
 .panel > .panel-footer {
@@ -34,5 +34,22 @@ body{
     background-color: #000;
     color: white;
 
+}
+
+.glyphicon-comment{
+	padding: 4px;
+	color: red;
+}
+
+.comment_count_color{
+   color: red;
+}
+
+.panel-footer a{
+	color: cyan;
+}
+
+.panel-footer a:hover{
+	color: orange;
 }
 

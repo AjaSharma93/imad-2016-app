@@ -1,13 +1,14 @@
 
 module.exports=function(app, pool){
+	
 	app.get('/fetch-articles', function(req, res){
 		var articleList='<div class="row fadeIn"> ';
-		pool.query('SELECT * FROM "Articles"', 
+		pool.query('SELECT * FROM "Articles" a, "Authors" b where a.author_id=b.author_id', //get all the details about the Articles and their authors
 		function(err, result)
 		{
 			if(err)
 			{
-				res.status(500).send(err)
+				res.status(500).send(err.toString());
 			}
 			else
 			{
@@ -15,7 +16,8 @@ module.exports=function(app, pool){
 				{
 					res.status(404).send('Failed to fetch articles');
 				}
-				else{	var i=0;		
+				else{	
+						var i=0;	
 						generateList(i, result, articleList, function(data){
 							if(data!='error')
 							{
@@ -33,48 +35,31 @@ module.exports=function(app, pool){
 	});
 	
 	
-	function getAuthor(aid, callback)
-	{
-		pool.query('SELECT author_name FROM "Authors" WHERE author_id=$1', [aid], 
-		function(err, result)
-		{
-			if(err)
-			{
-				console.log(err);
-				callback('error');
-			}
-			else
-			{
-				if(result.rows.length===0)
-				{
-					callback('error');
-				}
-				else
-				{
-					var author=result.rows[0].author_name;
-					callback(author);
-				}
-			}
-		});
-	}
-	
 	function generateList(i, result, articleList, callback) //uses a recursive function with callback to generate a list of articles
 	{
 		var article=result.rows[i];
-		getAuthor(article.author_id, function(author){
-			if(author!=='error')
+		getCommentNumber(article.article_title, function(comment_count){
+			if(comment_count!=='error')
 			{
 				var articleSummary=article.article_content.substring(0, 200)+"...";
 				articleList+=`
 				<div class="col-md-4">
 					<div class="panel panel-danger">
-						<div class="panel-heading">${article.article_heading}</div>
-						<div class="panel-content">${articleSummary}</div>
+						<div class="panel-heading">
+							${article.article_heading}
+						</div>
+						<div class="panel-content">
+							${articleSummary}
+							<br/>
+							<span class="bold right comment_count_color">${comment_count}</span>
+							<i class="glyphicon glyphicon-comment right"></i>
+						</div>
+						
 						<div class="panel-footer">
-						<span class="bold">Author:</span>${author}
-						<span class="right">
-							<a href="/articles/${article.article_title}">Read more...</a>
-						</span>
+							<span class="bold">Author:</span>${article.author_name}
+							<span class="right">
+								<a href="/articles/${article.article_title}">Read more...</a>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -92,5 +77,28 @@ module.exports=function(app, pool){
 				callback('error');
 			}
 		});
+		
+	}
+	
+	function getCommentNumber(atitle, callback) //returns number of comments in article
+	{
+		
+		pool.query(' SELECT count(article_title) as numbr_comments FROM "Comments" where article_title=$1', [atitle],
+			function(err, result)
+			{
+				if(err)
+				{
+					callback('error');
+				}else{
+					if(result.rows.length===0)
+					{
+						callback('error');
+					}
+					else
+					{
+						callback(result.rows[0].numbr_comments);
+					}
+				}
+			});
 	}
 }

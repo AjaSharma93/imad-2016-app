@@ -567,15 +567,11 @@ function articleTemplate(data, commentData)
 
 function safe_tags(str, callback) { //tag replacement of comments
     str=str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    str=str.replace(new RegExp("&lt;br /&gt;", "g"), "<br>");
+    str=str.replace(new RegExp("&lt;br /&gt;", "g"), "<br />");
     console.log(str);
     callback(str) ;
 }
 
-String.prototype.replaceAll = function(find, replace) {
-    var str = this;
-    return str.replace(new RegExp(find.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), replace);
-};
 
 app.get('/articles/:articleName', function(req, res){
 	var articleName=req.params.articleName; //article name obtained for GET request.
