@@ -11,7 +11,7 @@ var config={
 	host: 'db.imad.hasura-app.io',
 	port:'5432',
 	database: 'ajasharma93',
-	password: process.env.DB_PASSWORD
+	password: process.env.DB_PASSWORD;
 };
 
 var app = express();
@@ -370,7 +370,7 @@ function createTemplate(data){
 			    <div class="navigation menu" id="navbar">
 		    	 </div>
 			</nav>
-			<div class="container-fluid">
+			<div class="container">
 				${content}
 			</div>
 			
