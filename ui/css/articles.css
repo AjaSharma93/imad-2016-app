@@ -38,11 +38,11 @@ body{
 
 .glyphicon-comment{
 	padding: 4px;
-	color: red;
+	color: #e09696;
 }
 
 .comment_count_color{
-   color: red;
+   color: #e09696;
 }
 
 .panel-footer a{
