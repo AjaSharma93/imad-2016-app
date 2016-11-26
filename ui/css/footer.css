@@ -13,9 +13,9 @@ footer {
                 color: #fff;
             } 
 
-/*@media only screen and (max-width : 640px) 
+@media only screen and (max-width : 640px) 
 {
 	footer{
 		position:relative;
 	}
-}*/
+}
