@@ -567,7 +567,7 @@ function articleTemplate(data, commentData)
 
 function safe_tags(str, callback) { //tag replacement of comments
     str=str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    str=str.replaceAll(new RegExp("&lt;br /&gt;", "g"), "<br>");
+    str=str.replace(new RegExp("&lt;br /&gt;", "g"), "<br>");
     console.log(str);
     callback(str) ;
 }
