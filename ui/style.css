@@ -15,6 +15,12 @@ html, body {
 	padding-top:30px;
 }
 
+.container{
+	position: relative;
+	height: auto !important;
+	min-height: 100%;
+}
+
 .article_container{
     padding-bottom: 50px;
 }
