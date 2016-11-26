@@ -566,7 +566,9 @@ function articleTemplate(data, commentData)
 
 
 function safe_tags(str, callback) { //tag replacement of comments
-    callback(str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')) ;
+    str=str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    str=str.replace("&ltbr/&gt", "<br>")
+    callback() ;
 }
 
 app.get('/articles/:articleName', function(req, res){
