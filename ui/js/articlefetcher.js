@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("#articleslist").html(`<span class="vertical-align">
+	$("#articleslist").html(`<span style="display: flex; justify-content: center">
 								<i class=" whitetext fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i>
 								<span class="whitetext"><h1>Loading...</h1></span>
 							</span>`);

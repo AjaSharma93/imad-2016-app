@@ -48,6 +48,7 @@ module.exports=function(app, pool){
 							${article.article_heading}
 						</div>
 						<div class="panel-content">
+							<img src="${article.article_image}"  alt="${article.article_title}" class="img-responsive center-block" width="60%">
 							${articleSummary}
 							<br/>
 							<span class="bold right comment_count_color">${comment_count}</span>
