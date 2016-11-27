@@ -53,6 +53,9 @@ module.exports=function(app, pool){
 						<link href="/ui/css/footer.css" rel="stylesheet" />
 						<link href="/ui/css/style.css" rel="stylesheet" />
 						<link href="/ui/css/articles.css" rel="stylesheet" />
+						
+						<!-- Quicksand font -->
+						<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand" />
 						<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 						<script>
 							$(function(){
