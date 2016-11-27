@@ -2,7 +2,7 @@
 module.exports=function(app, pool){
 	app.get('/fetch-articles', function(req, res){
 		var articleList='<div class="row fadeIn"> ';
-		pool.query('SELECT * FROM "Articles" a, "Authors" b where a.author_id=b.author_id', //get all the details about the Articles and their authors
+		pool.query('SELECT * FROM "Articles" a, "Authors" b where a.author_id=b.author_id order by a.article_id asc', //get all the details about the Articles and their authors
 		function(err, result)
 		{
 			if(err)

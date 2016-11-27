@@ -71,17 +71,27 @@ module.exports=function(app, pool){
 							 </div>
 						</nav>
 						<div class="container whitetext">
-							<button id="back" class="btn btn-danger"><i class=" glyphicon glyphicon-chevron-left"></i>Go back</button>
-							<h1 class="center">${articleHeading}</h1>
-							<hr/>
-							<img src="${imgsrc}" alt="${articleHeading}"  class="img-responsive center-block" width="60%"/>
-							<hr/>
-							<p class="bold">Author:${author_name}</p>
-							<p>${publishDate.toDateString()}</p><hr/>
-							<span class="content">${articleContent}</span>
-							<h3>Comments:</h3><hr/>
-							${commentList}
-							<div id="commentbox">
+							<div class="article">
+								<button id="back" class="btn btn-danger"><i class=" glyphicon glyphicon-chevron-left"></i>Go back</button>
+								<h1 class="center">${articleHeading}</h1>
+								<hr/>
+								<img src="${imgsrc}" alt="${articleHeading}"  class="img-responsive center-block" width="60%"/>
+								<hr/>
+								<p class="bold">Author:${author_name}</p>
+								<p>${publishDate.toDateString()}</p><hr/>
+								<span class="content">${articleContent}</span>
+								<button id="previous" class="btn btn-danger">
+									<i class=" glyphicon glyphicon-chevron-left"></i>Previous
+								</button>
+								
+								<button id="next" class="right btn btn-primary">
+									Next<i class=" glyphicon glyphicon-chevron-right"></i>
+								</button>
+								
+								<h3>Comments:</h3><hr/>
+								${commentList}
+								<div id="commentbox">
+								</div>
 							</div>
 						</div>
 						<script>
@@ -106,6 +116,7 @@ module.exports=function(app, pool){
 								  });
 							  });
 						</script>
+						<script src="/ui/js/prev_next.js"></script>
 					</body>
 				</html>`;
 				return template;
@@ -117,7 +128,6 @@ module.exports=function(app, pool){
 		function safe_tags(str, callback) { //tag replacement of comments
 			str=str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 			str=str.replace(new RegExp("&lt;br /&gt;", "g"), "<br />");
-			console.log(str);
 			callback(str) ;
 		}
 
@@ -168,4 +178,63 @@ module.exports=function(app, pool){
 			});
 			
 		}); 
+		
+		
+		//Functionality for the next and previous buttons of a particular article
+		app.get('/prev-article/articles/:ArticleName', function(req, res){
+			var currentArticle=req.params.ArticleName;
+			pool.query(`select a.prev_article from (select article_title, LAG(article_title) over(order by article_id asc) as prev_article from "Articles") a
+							where a.article_title=$1`, [currentArticle],
+			function(err, result)
+			{
+				if(err)
+				{
+					res.status(500).send(err.toString());
+				}
+				else
+				{
+					if(result.rows.length===0)
+					{
+						res.send(currentArticle);
+					}
+					else
+					{
+						var prevArticle=result.rows[0].prev_article;
+						if(prevArticle!==null)
+							res.send(prevArticle);
+						else
+							res.send(currentArticle);
+					}	
+				}
+			});
+		});
+		
+		
+		app.get('/next-article/articles/:ArticleName', function(req, res){
+			var currentArticle=req.params.ArticleName;
+			pool.query(`select a.next_article from (select article_title, LEAD(article_title) over(order by article_id asc) as next_article from "Articles") a
+							where a.article_title=$1`, [currentArticle],
+			function(err, result)
+			{
+				if(err)
+				{
+					res.status(500).send(err.toString());
+				}
+				else
+				{
+					if(result.rows.length===0)
+					{
+						res.send(currentArticle);
+					}
+					else
+					{
+						var nextArticle=result.rows[0].next_article;
+						if(nextArticle!==null)
+							res.send(nextArticle);
+						else
+							res.send(currentArticle);
+					}	
+				}
+			});
+		});
 }
