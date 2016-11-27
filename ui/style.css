@@ -33,12 +33,6 @@ html, body {
 	background: url(/ui/images/menu-icon.png) center;
 }
 
-a:hover#menu-icon {
-
-	background-color: #444;
-	border-radius: 4px 4px 0 0;
-
-}
 
 .bgimg{
 		background-image: url(/ui/images/background.png);
