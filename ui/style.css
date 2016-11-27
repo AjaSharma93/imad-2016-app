@@ -18,7 +18,7 @@ html, body {
 .container{
 	position: relative;
 	height: auto !important;
-	min-height: 90%;
+	min-height: 95%;
 }
 
 .article_container{
