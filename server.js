@@ -11,7 +11,7 @@ var config={
 	host: 'db.imad.hasura-app.io',
 	port:'5432',
 	database: 'ajasharma93',
-	password: process.env.DB_PASSWORD;
+	password: process.env.DB_PASSWORD
 };
 
 var app = express();
@@ -24,7 +24,8 @@ app.use(session({
 }));
 
 var pool = new Pool(config); //declaring a connection pool for database queries;
-require('./ui/nest/articles.js')(app, pool);
+require('./ui/nest/articles.js')(app, pool); //get a summary of all articles
+require('./ui/nest/getArticle.js')(app, pool); //get a particular article page
 
 function hash(pass, salt)
 {
@@ -491,134 +492,7 @@ app.get('/articles/:articleName/commentry', function(req, res)
 	
 });
 
-//template for creating articles
-function articleTemplate(data, commentData)
-{
-	var articleTitle=data.article_title;
-	var articleHeading=data.article_heading;
-	var articleContent=data.article_content;
-	var publishDate=data.publish_date;
-	var commentList='';
-	var imgsrc='';
-	var author_name=data.author_name;
-	if(data.article_image)
-	{
-		imgsrc=data.article_image;
-	}
-	for(var i=0; i<commentData.length; i++)
-	{
-		safe_tags(commentData[i].comment, function(data){
-		commentList+=`<p><span class="bold">${commentData[i].comment_author}</span>
-					  posted on <span class="italic">${commentData[i].comment_date.toDateString()} 
-					  ${commentData[i].comment_date.toLocaleTimeString()}</span></p>
-					  <p>${data}</p><hr/>`;
-		});
-	}
 
-	var template=`
-	<!doctype html>
-		<html>
-			<head>
-				<title>${articleTitle}</title>
-				
-				<!-- latest jQuery direct from google's CDN -->
-				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-				<!-- Bootstrap compiled and minified CSS -->
-				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-				<!-- Bootstrap compiled and minified JS -->
-				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-				<link href="/ui/css/style.css" rel="stylesheet" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			</head>
-			<body>
-				<div class="padding-30px-top container-fluid">
-					<button id="back" class="btn btn-default"><i class=" glyphicon glyphicon-chevron-left"></i>Go back</button>
-					<h1 class="center">${articleHeading}</h1>
-					<hr/>
-					<img src="${imgsrc}" alt="${articleHeading}"  class="img-responsive center-block" width="60%"/>
-					<hr/>
-					<p class="bold">Author:${author_name}</p>
-					<p>${publishDate.toDateString()}</p><hr/>
-					<p>${articleContent}</p>
-					<h3>Comments:</h3><hr/>
-					${commentList}
-					<div id="commentbox">
-					</div>
-				</div>
-				<script>
-				$(document).ready(function()
-					{
-						$.get('/comments-authenticate', function(data, status){
-							$("#commentbox").html(data);
-						});
-					});
-				$("#back").click(function()
-				{
-					window.location.href="/articles";
-				});
-				</script>
-			</body>
-		</html>`;
-		return template;
-}
-
-
-
-
-function safe_tags(str, callback) { //tag replacement of comments
-    str=str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    str=str.replace(new RegExp("&lt;br /&gt;", "g"), "<br />");
-    console.log(str);
-    callback(str) ;
-}
-
-
-app.get('/articles/:articleName', function(req, res){
-	var articleName=req.params.articleName; //article name obtained for GET request.
-	pool.query('SELECT * FROM "Articles" a, "Authors" b where article_title= $1 and a.author_id=b.author_id', [articleName], 
-	function(err, result)
-	{
-		if(err)
-		{
-			res.status(500).send(err.toString()); //error occurred during query
-		}
-		else{
-			if(result.rows.length === 0)
-			{
-				res.status(404).send('Article not found'); //for return of no rows
-			}
-			else
-			{
-				var articleData=result.rows[0];
-				
-				pool.query('SELECT * FROM "Comments" where article_title= $1',[articleData.article_title], 
-				function(err, result)
-				{
-				    if(err)
-					{
-						res.status(500).send(err.toString()); //error occurred during query
-					}
-					else
-					{
-						var commentData;
-						if(result.rows.length===0)
-						{
-							commentData=''; //no comments on the article
-						}
-						else
-						{
-							commentData=result.rows;
-						}
-						res.send(articleTemplate(articleData, commentData));
-					}
-				});
-				
-				
-			}
-		}
-	});
-	
-}); 
 
 
 

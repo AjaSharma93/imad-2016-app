@@ -45,11 +45,16 @@ body{
    color: #e09696;
 }
 
-.panel-footer a{
+a{
 	color: #bfaef3;
 }
 
-.panel-footer a:hover{
+a:hover{
 	color: orange;
+}
+
+span.content{
+	font-size: 15px;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
