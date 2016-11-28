@@ -279,23 +279,11 @@ app.get('/comments-authenticate', function(req, res){
 
 
 //details of the about tab
-var about={
+/*var about={
 	selected2: 'selected2',
 	content:`
-	<div class="vertical-align">
-		<ul>
-		    <div id="wrapper">
-				<img class="resizeProfileImg" src="/ui/images/me.jpg" alt="My Profile">
-				<p>Name: Aja Sharma</p>
-				<p>From Bangalore, Karnataka</p>
-				<p>Graduated in B.E(E.C.E) in 2016<p>
-				<p>Love to learn new stuff.</p>
-				<p>Interests: Coding, Football, Music, Gaming</p>
-				<p>Getting a hang of web development with IMAD</p>
-			</div>
-		</ul>
-	</div>`
-};
+	`
+};*/
 
 //details of the contact tab
 var contact={
@@ -354,6 +342,8 @@ function createTemplate(data){
 			<link href="/ui/css/style.css" rel="stylesheet" />
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 			<link href="/ui/css/footer.css" rel="stylesheet" />
+			<link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
+			
 			<script>
 			$(function(){
 				$("#navbar").load("/navbar.html", function(){
@@ -404,7 +394,7 @@ app.get('/contact', function(req, res){
 });
 
 app.get('/about', function(req, res){
-	res.send(createTemplate(about)); //about tab
+	res.sendFile(path.join(__dirname, 'ui', 'about.html')); //about tab
 });
 
 app.get('/articles', function(req, res){

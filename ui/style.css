@@ -169,35 +169,8 @@ div.navigation span li.selected5{
 	color: #272822;
 }
 
-.resizeProfileImg{
-	height:200px;
-	width:200px;
-	border-radius: 100%;
-	box-shadow: 1px 1px 2px red, 0 0 25px orange, 0 0 5px red, 0 0 50px yellow;
-	margin-bottom: 20px;
-}
-
-#wrapper{
-	margin-top:30px;
-	background: #000;
-	padding: 25px 25px 25px 25px;
-	font-size:26;
-	color: #fff;
-	opacity:0.8;
-	box-shadow: 0 0 5px red, 0 0 1px red, 0 0 25px orange;
-	border-radius:5px;
-	text-align: center;
-}
 
 
-
-.displaynews{
-	width:75%;
-	height: 400px;
-	background-color: white;
-	border: none;
-	border-radius:5px;
-}
 
 
 #Social{
