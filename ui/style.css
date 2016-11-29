@@ -229,9 +229,8 @@ a:hover{
 		background: #272822;
 		left: 20px;
 		top: 60px;
-		width: 50%;
+		width: 40%;
 		border-radius: 4px 0 4px 4px;
-
 	}
 	
 	#menu-icon{
@@ -242,10 +241,6 @@ a:hover{
 
 		text-align: center;
 		width: 100%;
-		padding: 10px 0;
-		margin: 0;
-		height:60px;
-
 	}
 	
 	nav #login li{
@@ -254,13 +249,7 @@ a:hover{
 	}
 
 	nav:hover ul {
-
 		display: block;
-
-	}
-	
-	#wrapper{
-		margin-top: 100px;
 	}
 	
 	#Social ul, #Social li{
