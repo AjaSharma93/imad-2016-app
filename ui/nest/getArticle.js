@@ -27,7 +27,7 @@ module.exports=function(app, pool){
 			<!doctype html>
 				<html>
 					<head>
-						<title>My WebApp</title>
+						<title>${articleTitle}</title>
 						<!-- latest jQuery direct from google's CDN -->
 						<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 						<!-- FontAwesome CDN -->
