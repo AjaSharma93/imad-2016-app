@@ -329,7 +329,7 @@ function createTemplate(data){
 	<!doctype html>
 	<html>
 		<head>
-			<title>My WebApp</title>
+			<title>Contact</title>
 			<!-- FontAwesome CDN -->
 			<script src="https://use.fontawesome.com/70cfc12727.js"></script>
 			<!-- latest jQuery direct from google's CDN -->
