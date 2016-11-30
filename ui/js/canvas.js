@@ -112,7 +112,6 @@ function loop() {
 function resize() {
 	  cw = c1.width = c2.width = window.innerWidth,
 	  ch = c1.height = c2.height = $(document).height();
-	  console.log($(document).height());
 	  create();
 }
 
