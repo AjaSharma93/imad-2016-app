@@ -27,3 +27,10 @@ div.vertical-align ul li a{
 #notifyemail{
 	float:left;
 }
+
+
+@media only screen and (max-width: 640px){
+    .form-control{
+        width:90%;
+    }
+}
