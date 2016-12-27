@@ -30,7 +30,8 @@ div.vertical-align ul li a{
 
 
 @media only screen and (max-width: 640px){
-    .form-control{
-        width:90%;
+    .vertical-align ul
+    {
+        min-width: 0;
     }
 }
